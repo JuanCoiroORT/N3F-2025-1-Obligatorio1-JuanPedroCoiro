@@ -20,7 +20,7 @@ namespace LogicaNegocio.ValueObject
 
         private void Validar()
         {
-            //Validacion de la longitud y latitud
+            // VALIDAR UBICACION
         }
     }
 }

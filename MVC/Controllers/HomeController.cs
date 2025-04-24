@@ -1,3 +1,4 @@
+using LogicaAplicacion.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using System.Diagnostics;
@@ -8,9 +9,13 @@ namespace MVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private ICrearUsuario _crearUsuario;
+        public HomeController(ILogger<HomeController> logger,
+                                   ICrearUsuario crearUsuario
+                              )
         {
             _logger = logger;
+            _crearUsuario = crearUsuario;
         }
 
         public IActionResult Index()

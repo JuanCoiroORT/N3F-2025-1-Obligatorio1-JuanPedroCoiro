@@ -1,3 +1,11 @@
+using LogicaAccesoDatos.Contexto;
+using LogicaAccesoDatos.Repositorios;
+using LogicaAplicacion.AplicacionCasosUso;
+using LogicaAplicacion.Interfaces;
+using LogicaNegocio.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
+
 namespace MVC
 {
     public class Program
@@ -5,6 +13,17 @@ namespace MVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // CONEXION CON LA BASE DE DATOS
+            builder.Services.AddDbContext<DbContext, AppDbContexto>(
+                options => options.UseSqlServer(
+                        builder.Configuration.GetConnectionString("StringConnection")
+                )
+            );
+
+            // INYECCION DE DEPENDENCIAS
+            builder.Services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
+            builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

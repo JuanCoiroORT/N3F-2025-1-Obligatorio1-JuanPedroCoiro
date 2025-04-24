@@ -18,7 +18,7 @@ namespace LogicaNegocio.ValueObject
         
         private void Validar()
         {
-
+            // VALIDACION DE EMAIL
         }
 
     }

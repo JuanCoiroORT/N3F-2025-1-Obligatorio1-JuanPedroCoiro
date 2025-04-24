@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Mappers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\LogicaNegocio\LogicaNegocio.csproj" />
   </ItemGroup>
 

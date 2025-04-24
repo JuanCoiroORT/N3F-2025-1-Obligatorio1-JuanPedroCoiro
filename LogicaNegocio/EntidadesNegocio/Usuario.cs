@@ -17,7 +17,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public string Password { get; set; }
         public string Rol { get; set; }
 
-        //CONSTRUCTOR
+        //CONSTRUCTORES
         public Usuario(NombreCompleto nombreCompleto, string ci, string email, string password, string rol)
         {
             NombreCompleto = nombreCompleto;
@@ -25,6 +25,15 @@ namespace LogicaNegocio.EntidadesNegocio
             Email = email;
             Password = password;
             Rol = rol;
+        }
+
+        public Usuario()
+        {
+        }
+
+        public void Validar()
+        {
+            //TODO VALIDACION USUARIO
         }
     }
 }
