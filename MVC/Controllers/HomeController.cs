@@ -1,26 +1,23 @@
+using Compartido.DTOs;
 using LogicaAplicacion.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using System.Diagnostics;
+using LogicaNegocio.ValueObject;
 
 namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        private ICrearUsuario _crearUsuario;
-        public HomeController(ILogger<HomeController> logger,
-                                   ICrearUsuario crearUsuario
-                              )
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _crearUsuario = crearUsuario;
         }
 
         public IActionResult Index()
-        {
-            return View();
+        { 
+            return View();     
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,46 @@
+﻿@model Compartido.DTOs.UsuarioDTO;
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if(ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<form asp-action="Delete" method="post" class="mt-3">
+    <div class="mt-3">
+        <p>ID: @Model.Id</p>
+    </div>
+    <div class="mt-3">
+        <p>Nombre: @Model.NombreCompleto.Nombre</p>
+    </div>
+    <div class="mt-3">
+        <p>Apellido: @Model.NombreCompleto.Apellido</p>
+    </div>
+    <div class="mt-3">
+        <p>CI: @Model.CI</p>
+    </div>
+    <div class="mt-3">
+        <p>Email: @Model.Email</p>
+    </div>
+    <div class="mt-3">
+        <p>Rol: @Model.Rol</p>
+    </div>
+
+
+    <div class="row mt-5">
+        <div class="col-2">
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Eliminar Usuario</button>
+        </div>
+
+    </div>
+</form>

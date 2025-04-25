@@ -1,4 +1,5 @@
 ﻿using LogicaNegocio.EntidadesNegocio;
+using LogicaNegocio.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace LogicaNegocio.Interfaces
         Usuario Delete(Usuario usuario);
         Usuario GetById(int id);
         IEnumerable<Usuario> GetAll();
+        IEnumerable<Usuario> GetByName(string name);
     }
 }

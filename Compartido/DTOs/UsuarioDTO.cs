@@ -20,6 +20,10 @@ namespace Compartido.DTOs
             Rol = usuario.Rol;
         }
 
+        public UsuarioDTO()
+        {
+        }
+
         public Usuario ToUsuario()
         {
             Usuario usuario = new Usuario()

@@ -1,6 +1,7 @@
 ﻿using LogicaAccesoDatos.Contexto;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
+using LogicaNegocio.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,12 @@ namespace LogicaAccesoDatos.Repositorios
 
         public Usuario GetById(int id)
         {
-            return _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+            return _contexto.Set<Usuario>().FirstOrDefault(u => u.Id == id);
+        }
+
+        public IEnumerable<Usuario> GetByName(string name)
+        {
+            return _contexto.Set<Usuario>().AsEnumerable().Where(u => u.NombreCompleto.Nombre == name);
         }
 
         public Usuario Update(Usuario usuario)

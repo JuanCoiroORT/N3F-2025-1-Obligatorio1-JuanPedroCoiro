@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace LogicaNegocio.ValueObject
 {
+    [Owned]
     public class NombreCompleto
     {
         public string Nombre { get; }
@@ -18,9 +20,13 @@ namespace LogicaNegocio.ValueObject
             Validar();
         }
 
+        public NombreCompleto()
+        {
+        }
+
         private void Validar()
         {
-            // VALIDAR NOMBRE COMPLETO
+            // TODO VALIDAR NOMBRE COMPLETO
         }
     }
 }

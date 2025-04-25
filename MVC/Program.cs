@@ -15,7 +15,7 @@ namespace MVC
             var builder = WebApplication.CreateBuilder(args);
 
             // CONEXION CON LA BASE DE DATOS
-            builder.Services.AddDbContext<DbContext, AppDbContexto>(
+            builder.Services.AddDbContext<AppDbContexto>(
                 options => options.UseSqlServer(
                         builder.Configuration.GetConnectionString("StringConnection")
                 )
@@ -24,6 +24,10 @@ namespace MVC
             // INYECCION DE DEPENDENCIAS
             builder.Services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
             builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
+            builder.Services.AddScoped(typeof(IGetUserById), typeof(GetUserById));
+            builder.Services.AddScoped(typeof(IGetUsersByName), typeof(GetUsersByName));
+
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
