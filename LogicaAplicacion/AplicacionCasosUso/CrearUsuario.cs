@@ -27,8 +27,6 @@ namespace LogicaAplicacion.AplicacionCasosUso
             _repository.Add(usuario);
             UsuarioDTO nuevoUsuarioDTO = new UsuarioDTO(usuario);
             return nuevoUsuarioDTO;
-
-            
         }
     }
 }

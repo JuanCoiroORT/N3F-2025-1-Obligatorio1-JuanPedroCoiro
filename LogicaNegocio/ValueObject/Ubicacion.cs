@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.ExcepcionesEntidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,14 @@ namespace LogicaNegocio.ValueObject
 
         private void Validar()
         {
-            // VALIDAR UBICACION
+            if(Latitud <= -90 && Latitud >= 90)
+            {
+                throw new UsuarioException("Latitud invalida.");
+            }
+            if(Longitud <= -180 && Longitud >= 180)
+            {
+                throw new UsuarioException("Longitud invalida");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.ValueObject;
+﻿using LogicaNegocio.ExcepcionesEntidades;
+using LogicaNegocio.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace LogicaNegocio.EntidadesNegocio
             Email = email;
             Password = password;
             Rol = rol;
+            Validar();
         }
 
         public Usuario()
@@ -33,7 +35,18 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            //TODO VALIDACION USUARIO
+            if (Rol != "Administrador" || Rol != "Funcionario")
+            {
+                throw new UsuarioException("El rol ingresado es invalido.");
+            }
+            if(Password.Length < 8)
+            {
+                throw new UsuarioException("La Password debe tener al menos 8 caracteres.");
+            }
+            if(CI.Length != 9)
+            {
+                throw new UsuarioException("La CI ingresada es incorrecta.");
+            }
         }
     }
 }

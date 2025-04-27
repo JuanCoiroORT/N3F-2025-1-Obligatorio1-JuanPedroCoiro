@@ -24,6 +24,8 @@ namespace MVC
             // INYECCION DE DEPENDENCIAS
             builder.Services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
             builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
+            builder.Services.AddScoped(typeof(IDeleteUsuario), typeof(DeleteUsuario));
+            builder.Services.AddScoped(typeof(IUpdateUsuario), typeof(UpdateUsuario));
             builder.Services.AddScoped(typeof(IGetUserById), typeof(GetUserById));
             builder.Services.AddScoped(typeof(IGetUsersByName), typeof(GetUsersByName));
 

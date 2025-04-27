@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LogicaNegocio.ExcepcionesEntidades;
 using Microsoft.EntityFrameworkCore;
 
 namespace LogicaNegocio.ValueObject
@@ -26,7 +28,14 @@ namespace LogicaNegocio.ValueObject
 
         private void Validar()
         {
-            // TODO VALIDAR NOMBRE COMPLETO
+            if (String.IsNullOrEmpty(Nombre))
+            {
+                throw new UsuarioException("Ingrese un nombre.");
+            }
+            if (String.IsNullOrEmpty(Apellido))
+            {
+                throw new UsuarioException("Ingrese un apellido.");
+            }
         }
     }
 }
