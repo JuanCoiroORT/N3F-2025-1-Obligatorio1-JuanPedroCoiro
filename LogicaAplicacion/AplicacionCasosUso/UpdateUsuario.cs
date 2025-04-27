@@ -1,4 +1,5 @@
 ﻿using Compartido.DTOs;
+using LogicaAplicacion.Interfaces;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.AplicacionCasosUso
 {
-    public class UpdateUsuario
+    public class UpdateUsuario : IUpdateUsuario
     {
         IUsuarioRepository _repository;
         public UpdateUsuario(IUsuarioRepository repository)
@@ -17,14 +18,15 @@ namespace LogicaAplicacion.AplicacionCasosUso
             _repository = repository;
         }
 
-        public UsuarioDTO Execute(UsuarioDTO usuarioDTO)
+        public UsuarioDTO Execute(int id, UsuarioDTO usuarioDTO)
         {
             if (usuarioDTO == null)
             {
                 throw new ArgumentNullException(nameof(usuarioDTO), "El usuario no puede ser nulo.");
             }
             Usuario usuario = usuarioDTO.ToUsuario();
-            _repository.Update(usuario);
+            usuario.Id = id;
+            _repository.Update(id, usuario);
             UsuarioDTO usuarioEditadoDTO = new UsuarioDTO(usuario);
             return usuarioEditadoDTO;
         }

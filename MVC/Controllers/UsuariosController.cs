@@ -10,16 +10,22 @@ namespace MVC.Controllers
     public class UsuariosController : Controller
     {
         private ICrearUsuario _crearUsuario;
+        private IUpdateUsuario _updateUsuario;
+        private IDeleteUsuario _deleteUsuario;
         private IGetUserById _userById;
         private IGetUsersByName _usersByName;
 
         public UsuariosController(ICrearUsuario crearUsuario, 
                                     IGetUserById userById, 
-                                    IGetUsersByName usersByName)
+                                    IGetUsersByName usersByName,
+                                    IDeleteUsuario deleteUsuario,
+                                    IUpdateUsuario updateUsuario)
         {
             _crearUsuario = crearUsuario;
             _userById = userById;
             _usersByName = usersByName;
+            _deleteUsuario = deleteUsuario;
+            _updateUsuario = updateUsuario;
         }
 
         public IActionResult Index(string name)
@@ -43,7 +49,7 @@ namespace MVC.Controllers
             try
             {
                 _crearUsuario.Execute(usuarioDTO);
-                return RedirectToAction(nameof(Index), new {nombre = ""});
+                return RedirectToAction(nameof(Index), new {name = ""});
             }
             catch(UsuarioException ex) 
             {
@@ -75,7 +81,7 @@ namespace MVC.Controllers
         [HttpPost]
         public IActionResult Delete(int id, UsuarioDTO usuarioDTO)
         {
-            _deleteUsuario.Execute(id, usuarioDTO);
+            _deleteUsuario.Execute(id);
             return RedirectToAction(nameof(Index));
         }
     }

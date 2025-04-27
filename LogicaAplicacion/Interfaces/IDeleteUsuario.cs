@@ -9,6 +9,6 @@ namespace LogicaAplicacion.Interfaces
 {
     public interface IDeleteUsuario
     {
-        UsuarioDTO Execute(UsuarioDTO usuarioDTO);
+        void Execute(int id);
     }
 }

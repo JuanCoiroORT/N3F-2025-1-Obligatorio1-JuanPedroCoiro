@@ -9,6 +9,6 @@ namespace LogicaAplicacion.Interfaces
 {
     public interface IUpdateUsuario
     {
-        UsuarioDTO Execute(UsuarioDTO usuarioDTO);
+        UsuarioDTO Execute(int id, UsuarioDTO usuarioDTO);
     }
 }

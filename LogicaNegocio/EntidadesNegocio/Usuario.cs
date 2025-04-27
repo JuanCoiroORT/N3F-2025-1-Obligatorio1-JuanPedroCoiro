@@ -12,16 +12,18 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         public int Id { get; set; }
         private static int s_ultId;
-        public NombreCompleto NombreCompleto { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
         public string CI { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Rol { get; set; }
 
         //CONSTRUCTORES
-        public Usuario(NombreCompleto nombreCompleto, string ci, string email, string password, string rol)
+        public Usuario(string nombre, string apellido, string ci, string email, string password, string rol)
         {
-            NombreCompleto = nombreCompleto;
+            Nombre = nombre;
+            Apellido = apellido;
             CI = ci;
             Email = email;
             Password = password;
@@ -35,7 +37,7 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            if (Rol != "Administrador" || Rol != "Funcionario")
+            if (Rol != "Administrador" && Rol != "Funcionario")
             {
                 throw new UsuarioException("El rol ingresado es invalido.");
             }

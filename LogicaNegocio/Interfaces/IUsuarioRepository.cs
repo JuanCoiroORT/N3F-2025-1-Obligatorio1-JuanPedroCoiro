@@ -11,8 +11,8 @@ namespace LogicaNegocio.Interfaces
     public interface IUsuarioRepository
     {
         Usuario Add(Usuario usuario);
-        Usuario Update(Usuario usuario);
-        Usuario Delete(Usuario usuario);
+        Usuario Update(int id, Usuario usuario);
+        Usuario Delete(int id);
         Usuario GetById(int id);
         IEnumerable<Usuario> GetAll();
         IEnumerable<Usuario> GetByName(string name);

@@ -19,15 +19,14 @@ namespace LogicaAplicacion.AplicacionCasosUso
             _repository = repository;
         }
 
-        public UsuarioDTO Execute(UsuarioDTO usuarioDTO)
+        public void Execute(int id)
         {
-            if(usuarioDTO == null)
             {
-                throw new ArgumentNullException(nameof(usuarioDTO), "El usuario no puede ser nulo.");
+                if (id <= 0)
+                    throw new ArgumentException("El id debe ser mayor a cero.", nameof(id));
+
+                _repository.Delete(id);
             }
-            Usuario usuario = usuarioDTO.ToUsuario();
-            _repository.Delete(usuario);
-            return usuarioDTO;
         }
 
     }

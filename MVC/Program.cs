@@ -29,7 +29,17 @@ namespace MVC
             builder.Services.AddScoped(typeof(IGetUserById), typeof(GetUserById));
             builder.Services.AddScoped(typeof(IGetUsersByName), typeof(GetUsersByName));
 
+            //inyecto la Session
+            builder.Services.AddSession();
 
+            // CONFIGURACION PARA QUE SE MANTENGA LA SESION 
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Tiempo de inactividad
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true; // Muy importante para que no la bloquee
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -46,6 +56,9 @@ namespace MVC
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // USO DE SESION
+            app.UseSession();
 
             app.UseRouting();
 
