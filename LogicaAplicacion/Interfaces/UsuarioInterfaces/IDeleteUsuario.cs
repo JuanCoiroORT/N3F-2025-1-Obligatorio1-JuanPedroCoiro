@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces
+namespace LogicaAplicacion.Interfaces.UsuarioInterfaces
 {
-    public interface ICrearUsuario
+    public interface IDeleteUsuario
     {
-        UsuarioDTO Execute(UsuarioDTO usuarioDTO);
+        void Execute(int id);
     }
 }

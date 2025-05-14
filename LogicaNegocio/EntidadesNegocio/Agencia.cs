@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.ValueObject;
+﻿using LogicaNegocio.ExcepcionesEntidades;
+using LogicaNegocio.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,33 @@ namespace LogicaNegocio.EntidadesNegocio
         private static int s_ultId;
         public string Nombre { get; set; }
         public int DireccionPostal { get; set; }
-        public Ubicacion Ubicacion { get; set; }
+        public double Ubicacion { get; set; }
 
         //CONSTRUCTOR
-        public Agencia(string nombre, int direccionPostal, Ubicacion ubicacion)
+        public Agencia(string nombre, int direccionPostal, double ubicacion)
         {
             Nombre = nombre;
             DireccionPostal = direccionPostal;
             Ubicacion = ubicacion;
+            Validar();
+        }
+
+        public Agencia() { }
+
+        public void Validar()
+        {
+            if (String.IsNullOrEmpty(Nombre))
+            {
+                throw new AgenciaException("Nombre invalido.");
+            }
+            if(DireccionPostal == 0)
+            {
+                throw new AgenciaException("Direccion Postal incorrecta.");
+            }
+            if(Ubicacion == null)
+            {
+                throw new AgenciaException("Ubicacion incorrecta.");
+            }
         }
 
     }

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces
+namespace LogicaAplicacion.Interfaces.AgenciaInterfaces
 {
-    public interface IGetUserById
+    public interface ICrearAgencia
     {
-        UsuarioDTO Execute(int id);
+        AgenciaDTO Execute(AgenciaDTO agenciaDTO);
     }
 }

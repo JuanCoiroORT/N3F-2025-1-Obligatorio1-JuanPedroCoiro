@@ -1,5 +1,5 @@
 ﻿using Compartido.DTOs;
-using LogicaAplicacion.Interfaces;
+using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.ValueObject;
 using Microsoft.AspNetCore.Mvc;

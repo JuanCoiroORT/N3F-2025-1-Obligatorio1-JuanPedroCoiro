@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.ExcepcionesEntidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,16 @@ namespace LogicaNegocio.EntidadesNegocio
         public Comun(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, Agencia agencia, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, estado, seguimientos)
         {
             Agencia = agencia;
+        }
+
+        public Comun() { }
+
+        public void Validar()
+        {
+            if (Agencia == null)
+            {
+                throw new EnvioException("La agencia ingresada es incorrecta");
+            }
         }
 
         // METODO PARA FINALIZAR ENVIO

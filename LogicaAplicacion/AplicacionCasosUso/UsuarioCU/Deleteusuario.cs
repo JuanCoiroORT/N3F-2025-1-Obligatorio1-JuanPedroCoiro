@@ -1,5 +1,5 @@
 ﻿using Compartido.DTOs;
-using LogicaAplicacion.Interfaces;
+using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.AplicacionCasosUso
+namespace LogicaAplicacion.AplicacionCasosUso.UsuarioCU
 {
     
     public class DeleteUsuario : IDeleteUsuario

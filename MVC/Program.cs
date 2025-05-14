@@ -1,7 +1,7 @@
 using LogicaAccesoDatos.Contexto;
 using LogicaAccesoDatos.Repositorios;
-using LogicaAplicacion.AplicacionCasosUso;
-using LogicaAplicacion.Interfaces;
+using LogicaAplicacion.AplicacionCasosUso.UsuarioCU;
+using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;

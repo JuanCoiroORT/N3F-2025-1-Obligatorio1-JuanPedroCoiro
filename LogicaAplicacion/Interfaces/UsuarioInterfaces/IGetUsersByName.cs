@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces
+namespace LogicaAplicacion.Interfaces.UsuarioInterfaces
 {
     public interface IGetUsersByName
     {

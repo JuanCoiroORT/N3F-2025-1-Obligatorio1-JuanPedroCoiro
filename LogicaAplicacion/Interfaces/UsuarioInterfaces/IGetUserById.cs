@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces
+namespace LogicaAplicacion.Interfaces.UsuarioInterfaces
 {
-    public interface IUpdateUsuario
+    public interface IGetUserById
     {
-        UsuarioDTO Execute(int id, UsuarioDTO usuarioDTO);
+        UsuarioDTO Execute(int id);
     }
 }

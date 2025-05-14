@@ -13,5 +13,10 @@ namespace LogicaAccesoDatos.Contexto
         public AppDbContexto(DbContextOptions<AppDbContexto> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
+
+        public DbSet<Comun> EnviosComunes { get; set; }
+        public DbSet<Urgente> EnviosUrgentes { get; set; }
+        public DbSet<Seguimiento> Seguimientos { get; set; }
+        public DbSet<Agencia> Agencias { get; set; }
     }
 }

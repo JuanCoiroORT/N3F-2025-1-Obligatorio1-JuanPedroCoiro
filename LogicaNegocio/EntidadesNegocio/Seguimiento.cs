@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.ExcepcionesEntidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,27 @@ namespace LogicaNegocio.EntidadesNegocio
 {
     public class Seguimiento
     {
+        public int Id { get; set; }
+        private static int s_ultId;
         public string Comentario { get; set; }
         public DateTime Fecha { get; set; }
         public Usuario Empleado { get; set; }
 
-        public Seguimiento(string comentario, DateTime fecha, Usuario empleado)
+        public Seguimiento(string comentario, Usuario empleado)
         {
             Comentario = comentario;
-            Fecha = fecha;
             Empleado = empleado;
+            Fecha = DateTime.Now;
+        }
+
+        public Seguimiento() { }
+
+        public void Validar()
+        {
+            if (String.IsNullOrEmpty(Comentario))
+            {
+                throw new SeguimientoException("ingrese un comentario.");
+            }
         }
     }
 }
