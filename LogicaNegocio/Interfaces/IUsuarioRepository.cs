@@ -16,5 +16,7 @@ namespace LogicaNegocio.Interfaces
         Usuario GetById(int id);
         IEnumerable<Usuario> GetAll();
         IEnumerable<Usuario> GetByName(string name);
+        Usuario GetByEmail(string email);
+        IEnumerable<Usuario> GetClientes();
     }
 }

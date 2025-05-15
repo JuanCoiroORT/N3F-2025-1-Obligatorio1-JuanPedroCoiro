@@ -54,7 +54,7 @@ namespace LogicaAccesoDatos.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,7 +90,7 @@ namespace LogicaAccesoDatos.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

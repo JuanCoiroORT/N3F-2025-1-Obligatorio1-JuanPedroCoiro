@@ -11,5 +11,7 @@ namespace LogicaNegocio.Interfaces
     {
         Agencia Add(Agencia agencia);
         IEnumerable<Agencia> GetAll();
+
+        Agencia GetAgenciaById(int id);
     }
 }

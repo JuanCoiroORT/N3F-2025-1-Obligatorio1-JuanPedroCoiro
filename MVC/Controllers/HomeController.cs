@@ -53,6 +53,7 @@ namespace MVC.Controllers
             }
             // GUARDAR EL USUARIO
             HttpContext.Session.SetString("RolLogueado", usuario.Rol);
+            HttpContext.Session.SetInt32("IdLogueado", usuario.Id);
             return RedirectToAction("Index");
         }
         

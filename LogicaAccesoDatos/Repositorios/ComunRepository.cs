@@ -1,6 +1,7 @@
 ﻿using LogicaAccesoDatos.Contexto;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,10 @@ namespace LogicaAccesoDatos.Repositorios
 
         public IEnumerable<Comun> GetAll()
         {
-            return _contexto.EnviosComunes.ToList();
+            return _contexto.EnviosComunes
+                .Include(e => e.Agencia)
+                .Include(e => e.Seguimientos)
+                .ToList();
         }
 
         public Comun Update(Comun envioComun)

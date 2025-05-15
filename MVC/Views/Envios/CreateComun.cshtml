@@ -1,0 +1,38 @@
+﻿@model MVC.Models.ViewModelEnvioComun;
+
+<h2>Crear Envio Comun</h2>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Message
+    </div>
+}
+<form asp-action="CreateComun" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="comunDTO.Peso" class="control-label">Peso (kg)</label>
+        <input asp-for="comunDTO.Peso" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="comunDTO.ClienteId" class="control-label"></label>
+        <select asp-for="comunDTO.ClienteId" class="form-control" asp-items="Model.Clientes">
+            <option value="">Seleccione el email del cliente</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="comunDTO.AgenciaId" class="control-label"></label>
+        <select asp-for="comunDTO.AgenciaId" class="form-control" asp-items="Model.Agencias">
+            <option value="">Seleccione una agencia</option>
+        </select>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-2">
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success">Crear Envio</button>
+        </div>
+    </div>
+</form>

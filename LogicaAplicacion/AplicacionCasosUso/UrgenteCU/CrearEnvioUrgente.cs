@@ -27,7 +27,7 @@ namespace LogicaAplicacion.AplicacionCasosUso.UrgenteCU
             urgente.Validar();
             // Agregar envio comun a repositorio
             _repository.Add(urgente);
-            UrgenteDTO nuevoUrgenteDTO = new UrgenteDTO();
+            UrgenteDTO nuevoUrgenteDTO = new UrgenteDTO(urgente);
             return nuevoUrgenteDTO;
         }
     }

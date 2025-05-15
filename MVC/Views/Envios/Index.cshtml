@@ -1,0 +1,63 @@
+﻿@model MVC.Models.ViewModelEnviosIndex;
+
+@{
+    ViewData["Title"] = "CRUD de Envios";
+}
+
+<a asp-action="CreateUrgente" class="btn btn-stripped" style="float: right">Crear Envio Urgente</a>
+<a asp-action="CreateComun" class="btn btn-stripped" style="float: right">Crear Envio Comun</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Id Cliente</th>
+            <th>Direccion</th>
+            <th>Peso</th>
+            <th>Seguimiento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urgente in Model.urgenteDTOs)
+        {
+            <tr>
+                <td>@urgente.Id</td>
+                <td>Urgente</td>
+                <td>@urgente.ClienteId</td>
+                <td>@urgente.DireccionPostal</td>
+                <td>@urgente.Peso</td>
+                <td>@urgente.Seguimientos.LastOrDefault()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@urgente.Id" class="btn btn-info">Agregar Comentario</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@urgente.Id" method="get">
+                        <button type="submit" class="btn btn-danger">Finalizar Entrega</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @foreach (var comun in Model.comunDTOs)
+        {
+            <tr>
+                <td>@comun.Id</td>
+                <td>Comun</td>
+                <td>@comun.ClienteId</td>
+                <td>@comun.Agencia.DireccionPostal</td>
+                <td>@comun.Peso</td>
+                <td>@comun.Seguimientos.LastOrDefault()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@comun.Id" class="btn btn-info">Agregar Comentario</a>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@comun.Id" method="get">
+                        <button type="submit" class="btn btn-danger">Finalizar Entrega</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>

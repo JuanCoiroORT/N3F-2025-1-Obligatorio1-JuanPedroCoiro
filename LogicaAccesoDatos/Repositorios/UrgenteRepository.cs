@@ -1,6 +1,7 @@
 ﻿using LogicaAccesoDatos.Contexto;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,6 @@ namespace LogicaAccesoDatos.Repositorios
         }
         public Urgente Add(Urgente urgente)
         {
-
             _contexto.EnviosUrgentes.Add(urgente);
             _contexto.SaveChanges();
             return urgente;

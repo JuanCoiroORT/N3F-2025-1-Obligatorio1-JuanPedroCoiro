@@ -10,18 +10,21 @@ namespace LogicaNegocio.EntidadesNegocio
     public class Comun : Envio
     {
         public Agencia Agencia { get; set; }
+        public int AgenciaId { get; set; }
 
         //CONSTRUCTOR
-        public Comun(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, Agencia agencia, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, estado, seguimientos)
+        public Comun(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, Agencia agencia, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
         {
             Agencia = agencia;
+            Validar();
+            AgenciaId = Agencia.Id;
         }
 
         public Comun() { }
 
         public void Validar()
         {
-            if (Agencia == null)
+            if (AgenciaId == null)
             {
                 throw new EnvioException("La agencia ingresada es incorrecta");
             }

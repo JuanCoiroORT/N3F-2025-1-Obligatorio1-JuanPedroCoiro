@@ -24,6 +24,11 @@ namespace LogicaAccesoDatos.Repositorios
             return agencia;
         }
 
+        public Agencia GetAgenciaById(int id)
+        {
+            return _contexto.Set<Agencia>().FirstOrDefault(a => a.Id == id);
+        }
+
         public IEnumerable<Agencia> GetAll()
         {
             return _contexto.Agencias.ToList();

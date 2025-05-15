@@ -14,10 +14,11 @@ namespace LogicaNegocio.EntidadesNegocio
         public bool Eficiente { get; set; }
         
         //CONSTRUCTOR
-        public Urgente(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, int direccionPostal, bool eficiente, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, estado, seguimientos)
+        public Urgente(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, int direccionPostal, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
         {
             DireccionPostal = direccionPostal;
-            Eficiente = eficiente;
+            Eficiente = false;
+            Estado = string.IsNullOrEmpty(estado) ? "EN_PROCESO" : estado;
             Validar();
         }
 

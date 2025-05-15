@@ -81,6 +81,14 @@ namespace LogicaAccesoDatos.Repositorios
             }
         }
 
-        
+        public Usuario GetByEmail(string email)
+        {
+            return _contexto.Set<Usuario>().FirstOrDefault(u => u.Email == email);
+        }
+
+        public IEnumerable<Usuario> GetClientes()
+        {
+            return _contexto.Usuarios.Where(u => u.Rol == "Cliente").ToList();
+        }
     }
 }
