@@ -8,17 +8,8 @@ using System.Threading.Tasks;
 
 namespace Compartido.DTOs
 {
-    public class UrgenteDTO
+    public class UrgenteDTO : EnvioDTO
     {
-        public int Id { get; set; }
-        public double Peso { get; set; }
-        public double NumTracking { get; set; }
-        public Usuario Cliente { get; set; }
-        public Usuario Empleado { get; set; }
-        public int EmpleadoId { get; set; }
-        public int ClienteId { get; set; }
-        public string Estado {  get; set; }
-        public List<Seguimiento> Seguimientos { get; set; } = new List<Seguimiento>();
         public int DireccionPostal { get; set; }
         public bool Eficiente { get; set; }
 
@@ -27,8 +18,6 @@ namespace Compartido.DTOs
             Id = envioUrgente.Id;
             Peso = envioUrgente.Peso;
             NumTracking = envioUrgente.NumTracking;
-            Cliente = envioUrgente.Cliente;
-            Empleado = envioUrgente.Empleado;
             EmpleadoId = envioUrgente.EmpleadoId;
             ClienteId = envioUrgente.ClienteId;
             Estado = envioUrgente.Estado;

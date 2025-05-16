@@ -1,9 +1,7 @@
 ﻿using Compartido.DTOs;
-using LogicaAplicacion.Interfaces.ComunInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using MVC.Models;
-using LogicaAplicacion.Interfaces.UrgenteInterfaces;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
@@ -11,40 +9,55 @@ using LogicaNegocio.ExcepcionesEntidades;
 using System.Security.Claims;
 using LogicaAplicacion.Interfaces.AgenciaInterfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using LogicaAplicacion.AplicacionCasosUso.UsuarioCU;
+using LogicaAplicacion.Interfaces.EnvioInterfaces;
+using LogicaAplicacion.AplicacionCasosUso.EnvioCU;
 
 namespace MVC.Controllers
 {
     public class EnviosController : Controller
     {
-        private IGetEnviosComunes _getEnviosComunes;
-        private IGetEnviosUrgentes _getEnviosUrgentes;
-        private ICrearEnvioComun _crearEnvioComun;
-        private ICrearEnvioUrgente _crearEnvioUrgente;
+        private IGetAllComunes _getAllComunes;
+        private IGetAllUrgentes _getAllUrgentes;
+        private ICrearUrgente _crearUrgente;
+        private ICrearComun _crearComun;
+        private IGetUrgenteById _getUrgenteById;
+        private IGetComunById _getComunById;
+        private IUpdateEnvio _updateEnvio;
         private IGetUserByEmail _getUserByEmail;
         private IGetUserById _getUserById;
         private IGetAgencias _getAgencias;
         private IGetClientes _getClientes;
         private IGetAgenciaById _getAgenciaById;
+        private IDeleteUrgente _deleteUrgente;
+        private IDeleteComun _deleteComun;
 
-        public EnviosController(IGetEnviosComunes getEnviosComunes, IGetEnviosUrgentes getEnviosUrgentes,
-            ICrearEnvioUrgente crearEnvioUrgente, ICrearEnvioComun crearEnvioComun, IGetUserByEmail getUsersByEmail,
-            IGetUserById getUserById, IGetAgencias getAgencias, IGetClientes getClientes, IGetAgenciaById getAgenciaById)
-        {   
-            _getEnviosComunes = getEnviosComunes;
-            _getEnviosUrgentes = getEnviosUrgentes;
-            _crearEnvioComun = crearEnvioComun;
-            _crearEnvioUrgente = crearEnvioUrgente;
+        public EnviosController(IGetAllComunes getAllComunes, IGetAllUrgentes getAllUrgentes,
+            ICrearUrgente crearUrgente, IGetUserByEmail getUsersByEmail, ICrearComun crearComun,
+            IGetUserById getUserById, IGetAgencias getAgencias, IGetClientes getClientes, IGetAgenciaById getAgenciaById,
+            IGetUrgenteById getUrgenteById, IUpdateEnvio updateEnvio, IGetComunById getComunById, IDeleteUrgente deleteUrgente,
+            IDeleteComun deleteComun)
+        {
+            _getAllComunes = getAllComunes;
+            _getAllUrgentes = getAllUrgentes;
+            _crearUrgente = crearUrgente;
+            _crearComun = crearComun;
+            _getAgenciaById = getAgenciaById;
+            _getComunById = getComunById;
+            _getUrgenteById = getUrgenteById;
+            _updateEnvio = updateEnvio;
             _getUserByEmail = getUsersByEmail;
             _getUserById = getUserById;
             _getAgencias = getAgencias;
             _getClientes = getClientes;
-            _getAgenciaById = getAgenciaById;
+            _deleteUrgente = deleteUrgente;
+            _deleteComun = deleteComun;
         }
         public IActionResult Index()
         {
-            IEnumerable <ComunDTO> comunDTOs = _getEnviosComunes.Execute();
-            IEnumerable<UrgenteDTO> urgenteDTOs = _getEnviosUrgentes.Execute();
-            ViewModelEnviosIndex envios = new ViewModelEnviosIndex(comunDTOs, urgenteDTOs);
+            IEnumerable<ComunDTO> comunesDTO = _getAllComunes.Execute();
+            IEnumerable<UrgenteDTO> urgentesDTO = _getAllUrgentes.Execute();
+            ViewModelEnviosIndex envios = new ViewModelEnviosIndex(urgentesDTO, comunesDTO);
             return View(envios);
         }
 
@@ -87,12 +100,9 @@ namespace MVC.Controllers
                 urgenteDTO.EmpleadoId = empleadoDTO.Id;
                 urgenteDTO.Estado = "EN_PROCESO";
 
-                // Setear los objetos del envio
-                urgenteDTO.Cliente = new Usuario { Id = clienteDTO.Id };
-                urgenteDTO.Empleado = new Usuario { Id = empleadoDTO.Id };
 
                 // Crear el envio
-                _crearEnvioUrgente.Execute(urgenteDTO);
+                _crearUrgente.Execute(urgenteDTO);
 
                 //Rederigir al index
                 return RedirectToAction("Index");
@@ -167,13 +177,9 @@ namespace MVC.Controllers
                 comunDTO.EmpleadoId = empleadoDTO.Id;
                 comunDTO.AgenciaId = agenciaDTO.Id;
                 comunDTO.Estado = "EN_PROCESO";
-
-                // Setear los objetos del envio
-                comunDTO.Cliente = new Usuario { Id = clienteDTO.Id };
-                comunDTO.Empleado = new Usuario { Id = empleadoDTO.Id };
                 
                 // Crear el envio
-                _crearEnvioComun.Execute(comunDTO);
+                _crearComun.Execute(comunDTO);
 
                 // Redirigir al index
                 return RedirectToAction("Index");
@@ -197,6 +203,146 @@ namespace MVC.Controllers
                 }).ToList();
 
                 return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult EditComun(int id)
+        {
+            ComunDTO comunDTO = _getComunById.Execute(id);
+            return View(comunDTO);
+        }
+
+        [HttpPost]
+        public IActionResult EditComun(int id, string comentario)
+        {
+            try
+            {
+                //Obtener envio general
+                ComunDTO comunDTO = _getComunById.Execute(id);
+
+                //Crear nuevo seguimineto
+                Seguimiento nuevoSeguimineto = new Seguimiento
+                {
+                    Fecha = DateTime.Now,
+                    Comentario = comentario,
+                    EmpleadoId = comunDTO.EmpleadoId
+                };
+
+                //Agregar seguimineto al envio
+                comunDTO.Seguimientos.Add(nuevoSeguimineto);
+
+                // Actualizar Comun
+                _updateEnvio.Execute(id, comunDTO);
+
+                //Redirigir a index
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                //Mensaje con el error
+                ViewBag.Message = ex.Message;
+
+                //Obtener envio general para cargar la vista nuevamente
+                ComunDTO comunDTO = _getComunById.Execute(id);
+                return View(comunDTO);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult EditUrgente(int id)
+        {
+            UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
+            return View(urgenteDTO);
+        }
+
+        [HttpPost]
+        public IActionResult EditUrgente(int id,  string comentario)
+        {
+            try
+            {
+                //Obtener envio general
+                UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
+
+                //Crear nuevo seguimiento
+                Seguimiento nuevoSeguimiento = new Seguimiento
+                {
+                    Fecha = DateTime.Now,
+                    Comentario = comentario,
+                    EmpleadoId = urgenteDTO.EmpleadoId
+                };
+
+                //Agregar seguimineto al envio
+                urgenteDTO.Seguimientos.Add(nuevoSeguimiento);
+
+                // Actualizar Comun
+                _updateEnvio.Execute(id, urgenteDTO);
+
+                //Redirigir a index
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                //Mensaje con el error
+                ViewBag.Message = ex.Message;
+
+                //Obtener envio general para cargar la vista nuevamente
+                UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
+                return View(urgenteDTO);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult DeleteUrgente(int id)
+        {
+            UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
+            return View(urgenteDTO);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUrgente(UrgenteDTO urgenteDTO)
+        {
+            try
+            {
+                _deleteUrgente.Execute(urgenteDTO.Id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                //Mensaje con el error
+                ViewBag.Message = ex.Message;
+
+                //Volver a mostrar envio
+                UrgenteDTO nuevoUrgenteDTO = _getUrgenteById.Execute(urgenteDTO.Id);
+                return View(nuevoUrgenteDTO);
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult DeleteComun(int id)
+        {
+            ComunDTO comunDTO = _getComunById.Execute(id);
+            return View(comunDTO);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteComun(ComunDTO comunDTO)
+        {
+            try
+            {
+                _deleteComun.Execute(comunDTO.Id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                //Mensaje con el error
+                ViewBag.Message = ex.Message;
+
+                //Volver a mostrar envio
+                ComunDTO nuevoComunDTO = _getComunById.Execute(comunDTO.Id);
+                return View(nuevoComunDTO);
             }
         }
     }

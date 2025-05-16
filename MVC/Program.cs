@@ -1,12 +1,10 @@
 using LogicaAccesoDatos.Contexto;
 using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.AplicacionCasosUso.AgenciaCU;
-using LogicaAplicacion.AplicacionCasosUso.ComunCU;
-using LogicaAplicacion.AplicacionCasosUso.UrgenteCU;
+using LogicaAplicacion.AplicacionCasosUso.EnvioCU;
 using LogicaAplicacion.AplicacionCasosUso.UsuarioCU;
 using LogicaAplicacion.Interfaces.AgenciaInterfaces;
-using LogicaAplicacion.Interfaces.ComunInterfaces;
-using LogicaAplicacion.Interfaces.UrgenteInterfaces;
+using LogicaAplicacion.Interfaces.EnvioInterfaces;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +26,7 @@ namespace MVC
             );
 
             // INYECCION DE DEPENDENCIAS
+
             // Dependencia Usuario
             builder.Services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
             builder.Services.AddScoped(typeof(ICrearUsuario), typeof(CrearUsuario));
@@ -37,13 +36,19 @@ namespace MVC
             builder.Services.AddScoped(typeof(IGetUsersByName), typeof(GetUsersByName));
             builder.Services.AddScoped(typeof(IGetUserByEmail), typeof(GetUserByEmail));
             builder.Services.AddScoped(typeof(IGetClientes), typeof(GetClientes));
+
             // Dependencias Envio
-            builder.Services.AddScoped(typeof(IComunRepository), typeof(ComunRepository));
-            builder.Services.AddScoped(typeof(IUrgenteRepository), typeof(UrgenteRepository));
-            builder.Services.AddScoped(typeof(IGetEnviosComunes), typeof(GetEnviosComunes));
-            builder.Services.AddScoped(typeof(IGetEnviosUrgentes), typeof(GetEnviosUrgentes));
-            builder.Services.AddScoped(typeof(ICrearEnvioUrgente), typeof(CrearEnvioUrgente));
-            builder.Services.AddScoped(typeof(ICrearEnvioComun), typeof(CrearEnvioComun));
+            builder.Services.AddScoped(typeof(IEnvioRepository), typeof(EnvioRepository));
+            builder.Services.AddScoped(typeof(ICrearComun), typeof(CrearComun));
+            builder.Services.AddScoped(typeof(ICrearUrgente), typeof(CrearUrgente));
+            builder.Services.AddScoped(typeof(IGetAllComunes), typeof(GetAllComunes));
+            builder.Services.AddScoped(typeof(IGetAllUrgentes), typeof(GetAllUrgentes));
+            builder.Services.AddScoped(typeof(IGetUrgenteById), typeof(GetUrgenteById));
+            builder.Services.AddScoped(typeof(IGetComunById), typeof(GetComunById));
+            builder.Services.AddScoped(typeof(IUpdateEnvio), typeof(UpdateEnvio));
+            builder.Services.AddScoped(typeof(IDeleteUrgente), typeof(DeleteUrgente));
+            builder.Services.AddScoped(typeof(IDeleteComun), typeof(DeleteComun));
+
             // Dependecias Agencia
             builder.Services.AddScoped(typeof(IAgenciaRepository), typeof(AgenciaRepository));
             builder.Services.AddScoped(typeof(ICrearAgencia), typeof(CrearAgencia));

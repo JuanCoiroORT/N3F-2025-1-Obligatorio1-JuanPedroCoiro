@@ -7,33 +7,22 @@ using System.Threading.Tasks;
 
 namespace Compartido.DTOs
 {
-    public class ComunDTO
+    public class ComunDTO : EnvioDTO
     {
-        public int Id { get; set; }
-        public double Peso { get; set; }
-        public double NumTracking { get; set; }
-        public Usuario Cliente { get; set; }
-        public Usuario Empleado { get; set; }
-        public int EmpleadoId { get; set; }
-        public int ClienteId { get; set; }
-        public string Estado { get; set; }
-        public List<Seguimiento> Seguimientos { get; set; } = new List<Seguimiento>();
         public Agencia Agencia { get; set; }
-        public int AgenciaId { get; set; }  
+        public int AgenciaId { get; set; }
 
-        public ComunDTO(Comun envioComun) 
-        {
+        public ComunDTO(Comun envioComun)
+        { 
             Id = envioComun.Id;
             Peso = envioComun.Peso;
             NumTracking = envioComun.NumTracking;
-            Cliente = envioComun.Cliente;
-            Empleado = envioComun.Empleado;
-            ClienteId = envioComun.ClienteId;
             EmpleadoId = envioComun.EmpleadoId;
+            ClienteId = envioComun.ClienteId;
             Estado = envioComun.Estado;
-            Seguimientos = envioComun.Seguimientos;
-            Agencia = envioComun.Agencia;
             AgenciaId = envioComun.AgenciaId;
+            Agencia = envioComun.Agencia;
+            Seguimientos = envioComun.Seguimientos;
         }
 
         public ComunDTO() { }
@@ -49,8 +38,8 @@ namespace Compartido.DTOs
                 ClienteId = this.ClienteId,
                 Estado = this.Estado,
                 Seguimientos = this.Seguimientos,
-                Agencia = this.Agencia,
                 AgenciaId = this.AgenciaId,
+                Agencia = this.Agencia,
             };
             return envioComun;
         }

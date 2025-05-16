@@ -45,16 +45,13 @@ namespace LogicaAccesoDatos.Migrations
                     b.ToTable("Agencias");
                 });
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Comun", b =>
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Envio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AgenciaId")
-                        .HasColumnType("int");
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -72,15 +69,22 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
-                    b.HasIndex("AgenciaId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("EmpleadoId");
 
-                    b.ToTable("EnviosComunes", (string)null);
+                    b.ToTable("Envios");
+
+                    b.HasDiscriminator<string>("Tipo").HasValue("Envio");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Seguimiento", b =>
@@ -95,66 +99,22 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ComunId")
+                    b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmpleadoId")
+                    b.Property<int>("EnvioId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UrgenteId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ComunId");
 
                     b.HasIndex("EmpleadoId");
 
-                    b.HasIndex("UrgenteId");
+                    b.HasIndex("EnvioId");
 
                     b.ToTable("Seguimientos");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Urgente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DireccionPostal")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Eficiente")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("EmpleadoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("NumTracking")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Peso")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("EmpleadoId");
-
-                    b.ToTable("EnviosUrgentes", (string)null);
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>
@@ -196,12 +156,31 @@ namespace LogicaAccesoDatos.Migrations
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Comun", b =>
                 {
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Agencia", "Agencia")
-                        .WithMany()
-                        .HasForeignKey("AgenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasBaseType("LogicaNegocio.EntidadesNegocio.Envio");
 
+                    b.Property<int>("AgenciaId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("AgenciaId");
+
+                    b.HasDiscriminator().HasValue("Comun");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Urgente", b =>
+                {
+                    b.HasBaseType("LogicaNegocio.EntidadesNegocio.Envio");
+
+                    b.Property<int>("DireccionPostal")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Eficiente")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Urgente");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Envio", b =>
+                {
                     b.HasOne("LogicaNegocio.EntidadesNegocio.Usuario", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteId")
@@ -213,8 +192,6 @@ namespace LogicaAccesoDatos.Migrations
                         .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Agencia");
 
                     b.Navigation("Cliente");
 
@@ -223,48 +200,35 @@ namespace LogicaAccesoDatos.Migrations
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Seguimiento", b =>
                 {
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Comun", null)
-                        .WithMany("Seguimientos")
-                        .HasForeignKey("ComunId");
-
                     b.HasOne("LogicaNegocio.EntidadesNegocio.Usuario", "Empleado")
                         .WithMany()
                         .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Urgente", null)
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.Envio", "Envio")
                         .WithMany("Seguimientos")
-                        .HasForeignKey("UrgenteId");
-
-                    b.Navigation("Empleado");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Urgente", b =>
-                {
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Usuario", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("EnvioId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Usuario", "Empleado")
-                        .WithMany()
-                        .HasForeignKey("EmpleadoId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
                     b.Navigation("Empleado");
+
+                    b.Navigation("Envio");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Comun", b =>
                 {
-                    b.Navigation("Seguimientos");
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.Agencia", "Agencia")
+                        .WithMany()
+                        .HasForeignKey("AgenciaId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Agencia");
                 });
 
-            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Urgente", b =>
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Envio", b =>
                 {
                     b.Navigation("Seguimientos");
                 });

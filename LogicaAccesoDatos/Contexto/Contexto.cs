@@ -14,41 +14,42 @@ namespace LogicaAccesoDatos.Contexto
 
         public DbSet<Usuario> Usuarios { get; set; }
 
-        public DbSet<Comun> EnviosComunes { get; set; }
-        public DbSet<Urgente> EnviosUrgentes { get; set; }
+        public DbSet<Envio> Envios { get; set; }
         public DbSet<Seguimiento> Seguimientos { get; set; }
         public DbSet<Agencia> Agencias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configurar herencia
-            modelBuilder.Entity<Urgente>().ToTable("EnviosUrgentes");
-            modelBuilder.Entity<Comun>().ToTable("EnviosComunes");
+            // HERENCIA: TPH
+            modelBuilder.Entity<Envio>()
+                .HasDiscriminator<string>("Tipo")
+                .HasValue<Comun>("Comun")
+                .HasValue<Urgente>("Urgente");
 
-            // Configuración de las claves foráneas para evitar el ciclo de cascada
-            modelBuilder.Entity<Urgente>()
-                .HasOne(u => u.Cliente)
-                .WithMany()
-                .HasForeignKey(u => u.ClienteId)
-                .OnDelete(DeleteBehavior.NoAction); 
+            // Relación Envio -> Seguimiento
+            modelBuilder.Entity<Envio>()
+                .HasMany(e => e.Seguimientos)
+                .WithOne(s => s.Envio)
+                .HasForeignKey(s => s.EnvioId);
 
-            modelBuilder.Entity<Urgente>()
-                .HasOne(u => u.Empleado)
+            // Evitar delete en cascada
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Empleado)
                 .WithMany()
-                .HasForeignKey(u => u.EmpleadoId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .HasForeignKey(e => e.EmpleadoId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Comun>()
-                .HasOne(c => c.Cliente)
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Cliente)
                 .WithMany()
-                .HasForeignKey(c => c.ClienteId)
+                .HasForeignKey(e => e.ClienteId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Comun>()
-                .HasOne(c => c.Empleado)
+                .HasOne(c => c.Agencia)
                 .WithMany()
-                .HasForeignKey(c => c.EmpleadoId)
-                .OnDelete(DeleteBehavior.NoAction); 
+                .HasForeignKey(c => c.AgenciaId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }

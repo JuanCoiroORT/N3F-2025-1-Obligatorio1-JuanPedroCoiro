@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class SegundaMigracion : Migration
+    public partial class MigracionInicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,70 +27,57 @@ namespace LogicaAccesoDatos.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EnviosUrgentes",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DireccionPostal = table.Column<int>(type: "int", nullable: false),
-                    Eficiente = table.Column<bool>(type: "bit", nullable: false),
-                    NumTracking = table.Column<double>(type: "float", nullable: false),
-                    EmpleadoId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    Peso = table.Column<double>(type: "float", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CI = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rol = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnviosUrgentes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EnviosUrgentes_Usuarios_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EnviosUrgentes_Usuarios_EmpleadoId",
-                        column: x => x.EmpleadoId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "EnviosComunes",
+                name: "Envios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AgenciaId = table.Column<int>(type: "int", nullable: false),
                     NumTracking = table.Column<double>(type: "float", nullable: false),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<double>(type: "float", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    AgenciaId = table.Column<int>(type: "int", nullable: true),
+                    DireccionPostal = table.Column<int>(type: "int", nullable: true),
+                    Eficiente = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnviosComunes", x => x.Id);
+                    table.PrimaryKey("PK_Envios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EnviosComunes_Agencias_AgenciaId",
+                        name: "FK_Envios_Agencias_AgenciaId",
                         column: x => x.AgenciaId,
                         principalTable: "Agencias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_EnviosComunes_Usuarios_ClienteId",
+                        name: "FK_Envios_Usuarios_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_EnviosComunes_Usuarios_EmpleadoId",
+                        name: "FK_Envios_Usuarios_EmpleadoId",
                         column: x => x.EmpleadoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -102,22 +89,17 @@ namespace LogicaAccesoDatos.Migrations
                     Comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false),
-                    ComunId = table.Column<int>(type: "int", nullable: true),
-                    UrgenteId = table.Column<int>(type: "int", nullable: true)
+                    EnvioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Seguimientos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Seguimientos_EnviosComunes_ComunId",
-                        column: x => x.ComunId,
-                        principalTable: "EnviosComunes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Seguimientos_EnviosUrgentes_UrgenteId",
-                        column: x => x.UrgenteId,
-                        principalTable: "EnviosUrgentes",
-                        principalColumn: "Id");
+                        name: "FK_Seguimientos_Envios_EnvioId",
+                        column: x => x.EnvioId,
+                        principalTable: "Envios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Seguimientos_Usuarios_EmpleadoId",
                         column: x => x.EmpleadoId,
@@ -127,34 +109,19 @@ namespace LogicaAccesoDatos.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnviosComunes_AgenciaId",
-                table: "EnviosComunes",
+                name: "IX_Envios_AgenciaId",
+                table: "Envios",
                 column: "AgenciaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnviosComunes_ClienteId",
-                table: "EnviosComunes",
+                name: "IX_Envios_ClienteId",
+                table: "Envios",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnviosComunes_EmpleadoId",
-                table: "EnviosComunes",
+                name: "IX_Envios_EmpleadoId",
+                table: "Envios",
                 column: "EmpleadoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EnviosUrgentes_ClienteId",
-                table: "EnviosUrgentes",
-                column: "ClienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EnviosUrgentes_EmpleadoId",
-                table: "EnviosUrgentes",
-                column: "EmpleadoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Seguimientos_ComunId",
-                table: "Seguimientos",
-                column: "ComunId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seguimientos_EmpleadoId",
@@ -162,9 +129,9 @@ namespace LogicaAccesoDatos.Migrations
                 column: "EmpleadoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Seguimientos_UrgenteId",
+                name: "IX_Seguimientos_EnvioId",
                 table: "Seguimientos",
-                column: "UrgenteId");
+                column: "EnvioId");
         }
 
         /// <inheritdoc />
@@ -174,13 +141,13 @@ namespace LogicaAccesoDatos.Migrations
                 name: "Seguimientos");
 
             migrationBuilder.DropTable(
-                name: "EnviosComunes");
-
-            migrationBuilder.DropTable(
-                name: "EnviosUrgentes");
+                name: "Envios");
 
             migrationBuilder.DropTable(
                 name: "Agencias");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
         }
     }
 }

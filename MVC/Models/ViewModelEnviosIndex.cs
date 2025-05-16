@@ -4,12 +4,13 @@ namespace MVC.Models
 {
     public class ViewModelEnviosIndex
     {
-        public ViewModelEnviosIndex(IEnumerable<ComunDTO> comunDTOs, IEnumerable<UrgenteDTO> urgenteDTOs)
+        public ViewModelEnviosIndex(IEnumerable<UrgenteDTO> urgentesDTO, IEnumerable<ComunDTO> comunesDTO)
         {
-            this.comunDTOs = comunDTOs;
-            this.urgenteDTOs = urgenteDTOs;
+            UrgentesDTO = urgentesDTO;
+            ComunesDTO = comunesDTO;
         }
-        public IEnumerable<ComunDTO> comunDTOs { get; set; }
-        public IEnumerable<UrgenteDTO> urgenteDTOs { get; set; }
+
+        public IEnumerable<UrgenteDTO> UrgentesDTO { get; set; }
+        public IEnumerable<ComunDTO> ComunesDTO { get; set; }
     }
 }

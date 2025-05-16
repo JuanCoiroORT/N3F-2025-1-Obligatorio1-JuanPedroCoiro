@@ -55,9 +55,9 @@ namespace MVC.Controllers
             {
                 ViewBag.Message = ex.Message;
                 return View();
-            }
-            
+            }  
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {

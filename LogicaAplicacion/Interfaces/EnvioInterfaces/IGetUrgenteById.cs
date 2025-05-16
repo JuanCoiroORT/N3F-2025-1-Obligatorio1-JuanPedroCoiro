@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces.ComunInterfaces
+namespace LogicaAplicacion.Interfaces.EnvioInterfaces
 {
-    public interface ICrearEnvioComun
+    public interface IGetUrgenteById
     {
-        ComunDTO Execute(ComunDTO comunDTO);
+        UrgenteDTO Execute(int id);
     }
 }

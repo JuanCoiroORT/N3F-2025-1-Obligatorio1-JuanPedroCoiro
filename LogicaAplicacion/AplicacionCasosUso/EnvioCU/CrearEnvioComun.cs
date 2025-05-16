@@ -1,5 +1,5 @@
 ﻿using Compartido.DTOs;
-using LogicaAplicacion.Interfaces.ComunInterfaces;
+using LogicaAplicacion.Interfaces.EnvioInterfaces;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
 using System;
@@ -8,25 +8,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.AplicacionCasosUso.ComunCU
+namespace LogicaAplicacion.AplicacionCasosUso.EnvioCU
 {
-    public class CrearEnvioComun : ICrearEnvioComun
+    public class CrearComun : ICrearComun
     {
-        IComunRepository _repository;
+        IEnvioRepository _repository;
 
-        public CrearEnvioComun(IComunRepository repository)
+        public CrearComun(IEnvioRepository repository)
         {
             _repository = repository;
         }
 
         public ComunDTO Execute(ComunDTO comunDTO)
         {
-            // Pasar DTO a comun
+            // PASA DTO A comun
             Comun comun = comunDTO.ToComun();
-            // Validar
+            // valida comun
             comun.Validar();
-            // Agregar envio comun a repositorio
-            _repository.Add(comun);
+            // AGREGA USUARIO A REPOSITORIO
+            _repository.AddComun(comun);
             ComunDTO nuevoComunDTO = new ComunDTO(comun);
             return nuevoComunDTO;
         }

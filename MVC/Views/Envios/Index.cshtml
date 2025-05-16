@@ -13,14 +13,14 @@
             <th>ID</th>
             <th>Tipo</th>
             <th>Id Cliente</th>
-            <th>Direccion</th>
+            <th>Direccion Postal</th>
             <th>Peso</th>
             <th>Seguimiento</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var urgente in Model.urgenteDTOs)
+        @foreach (var urgente in Model.UrgentesDTO)
         {
             <tr>
                 <td>@urgente.Id</td>
@@ -28,18 +28,18 @@
                 <td>@urgente.ClienteId</td>
                 <td>@urgente.DireccionPostal</td>
                 <td>@urgente.Peso</td>
-                <td>@urgente.Seguimientos.LastOrDefault()</td>
+                <td>@(urgente.Seguimientos?.LastOrDefault()?.Comentario ?? "Sin Comentario")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@urgente.Id" class="btn btn-info">Agregar Comentario</a>
+                    <a asp-action="EditUrgente" asp-route-id="@urgente.Id" class="btn btn-info">Agregar Comentario</a>
                 </td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@urgente.Id" method="get">
+                    <form asp-action="DeleteUrgente" asp-route-id="@urgente.Id" method="get">
                         <button type="submit" class="btn btn-danger">Finalizar Entrega</button>
                     </form>
                 </td>
             </tr>
         }
-        @foreach (var comun in Model.comunDTOs)
+        @foreach (var comun in Model.ComunesDTO)
         {
             <tr>
                 <td>@comun.Id</td>
@@ -47,12 +47,12 @@
                 <td>@comun.ClienteId</td>
                 <td>@comun.Agencia.DireccionPostal</td>
                 <td>@comun.Peso</td>
-                <td>@comun.Seguimientos.LastOrDefault()</td>
+                <td>@(comun.Seguimientos?.LastOrDefault()?.Comentario ?? "Sin Comentario")</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@comun.Id" class="btn btn-info">Agregar Comentario</a>
+                    <a asp-action="EditComun" asp-route-id="@comun.Id" class="btn btn-info">Agregar Comentario</a>
                 </td>
                 <td>
-                    <form asp-action="Delete" asp-route-id="@comun.Id" method="get">
+                    <form asp-action="DeleteComun" asp-route-id="@comun.Id" method="get">
                         <button type="submit" class="btn btn-danger">Finalizar Entrega</button>
                     </form>
                 </td>

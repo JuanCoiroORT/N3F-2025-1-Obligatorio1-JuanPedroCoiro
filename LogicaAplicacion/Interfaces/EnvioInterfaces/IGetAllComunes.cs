@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.Interfaces.UrgenteInterfaces
+namespace LogicaAplicacion.Interfaces.EnvioInterfaces
 {
-    public interface ICrearEnvioUrgente
+    public interface IGetAllComunes
     {
-        UrgenteDTO Execute(UrgenteDTO urgenteDTO);
+        IEnumerable<ComunDTO> Execute();
     }
 }

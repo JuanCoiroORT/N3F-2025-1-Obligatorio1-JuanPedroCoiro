@@ -13,8 +13,8 @@ namespace LogicaNegocio.EntidadesNegocio
         public double NumTracking { get; set; }
         public Usuario Empleado { get; set; }
         public int EmpleadoId { get; set; }
-        public int ClienteId { get; set; }
         public Usuario Cliente { get; set; }
+        public int ClienteId { get; set; }
         public double Peso { get; set; }
         public string Estado { get; set; }
         public List<Seguimiento> Seguimientos { get; set; } = new List<Seguimiento>();
@@ -28,8 +28,6 @@ namespace LogicaNegocio.EntidadesNegocio
             Peso = peso;
             Estado = "EN_PROCESO";
             Seguimientos = seguimientos;
-            EmpleadoId = Empleado.Id;
-            ClienteId = Cliente.Id;
         }
         public Envio() { }
         // METODO PARA FINALIZAR ENVIO
