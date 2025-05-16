@@ -1,6 +1,7 @@
 ﻿using Compartido.DTOs;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.EntidadesNegocio;
+using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -20,13 +21,14 @@ namespace LogicaAplicacion.AplicacionCasosUso.UsuarioCU
 
         public UsuarioDTO Execute(int id, UsuarioDTO usuarioDTO)
         {
-            if (usuarioDTO == null)
-            {
-                throw new ArgumentNullException(nameof(usuarioDTO), "El usuario no puede ser nulo.");
-            }
+            //Pasa dto a usuario
             Usuario usuario = usuarioDTO.ToUsuario();
-            usuario.Id = id;
+
+            //Validar
+            usuario.Validar();
+
             _repository.Update(id, usuario);
+
             UsuarioDTO usuarioEditadoDTO = new UsuarioDTO(usuario);
             return usuarioEditadoDTO;
         }

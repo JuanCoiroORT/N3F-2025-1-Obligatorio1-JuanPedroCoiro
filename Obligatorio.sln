@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{74939706-D286-4CB1-AF11-E8BA03F48FEB}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compartido", "Compartido\Compartido.csproj", "{B6DAB72A-202A-4131-8D9E-17B23E66A6CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC", "MVC\MVC.csproj", "{A32C8FAD-9000-40AB-B9AC-2670CC433D7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEBAPI", "WEBAPI\WEBAPI.csproj", "{D95C1522-4D10-4C08-8B5B-D19C99B4C979}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A32C8FAD-9000-40AB-B9AC-2670CC433D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A32C8FAD-9000-40AB-B9AC-2670CC433D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A32C8FAD-9000-40AB-B9AC-2670CC433D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95C1522-4D10-4C08-8B5B-D19C99B4C979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95C1522-4D10-4C08-8B5B-D19C99B4C979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95C1522-4D10-4C08-8B5B-D19C99B4C979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95C1522-4D10-4C08-8B5B-D19C99B4C979}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -24,9 +24,9 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            if (AgenciaId == null)
+            if(Peso <= 0)
             {
-                throw new EnvioException("La agencia ingresada es incorrecta");
+                throw new EnvioException("El peso del envio debe ser mayor a 0.");
             }
         }
 

@@ -55,6 +55,10 @@ namespace MVC.Controllers
         }
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             IEnumerable<ComunDTO> comunesDTO = _getAllComunes.Execute();
             IEnumerable<UrgenteDTO> urgentesDTO = _getAllUrgentes.Execute();
             ViewModelEnviosIndex envios = new ViewModelEnviosIndex(urgentesDTO, comunesDTO);
@@ -64,6 +68,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult CreateUrgente()
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             // Traer a los clientes para select de email
             IEnumerable<UsuarioDTO> clientesDTO = _getClientes.Execute();
             var clientesSelect = clientesDTO.Select(c => new SelectListItem
@@ -126,6 +134,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult CreateComun()
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             //Traer agencias para select
             IEnumerable<AgenciaDTO> agenciasDTOs = _getAgencias.Execute();
 
@@ -209,6 +221,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult EditComun(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ComunDTO comunDTO = _getComunById.Execute(id);
             return View(comunDTO);
         }
@@ -252,6 +268,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult EditUrgente(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
             return View(urgenteDTO);
         }
@@ -296,6 +316,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult DeleteUrgente(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             UrgenteDTO urgenteDTO = _getUrgenteById.Execute(id);
             return View(urgenteDTO);
         }
@@ -323,6 +347,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult DeleteComun(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ComunDTO comunDTO = _getComunById.Execute(id);
             return View(comunDTO);
         }
@@ -330,6 +358,10 @@ namespace MVC.Controllers
         [HttpPost]
         public IActionResult DeleteComun(ComunDTO comunDTO)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 _deleteComun.Execute(comunDTO.Id);

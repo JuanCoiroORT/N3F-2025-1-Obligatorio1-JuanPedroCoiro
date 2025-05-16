@@ -37,17 +37,25 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            if (Rol != "Administrador" && Rol != "Funcionario")
+            if (String.IsNullOrEmpty(Email) || Email.Length < 7 || !Email.Contains("@") || !Email.Contains(".com"))
             {
-                throw new UsuarioException("El rol ingresado es invalido.");
+                throw new UsuarioException("Email invalido.");
             }
-            if(Password.Length < 8)
+            if (String.IsNullOrEmpty(Email) || Nombre.Length < 3)
+            {
+                throw new UsuarioException("Ingrese un nombre correcto.");
+            }
+            if (String.IsNullOrEmpty(Email) || Apellido.Length < 3)
+            {
+                throw new UsuarioException("Ingrese un apellido correcto.");
+            }
+            if (String.IsNullOrEmpty(Email) || Password.Length < 8)
             {
                 throw new UsuarioException("La Password debe tener al menos 8 caracteres.");
             }
-            if(CI.Length != 9)
+            if(CI.Length != 8)
             {
-                throw new UsuarioException("La CI ingresada es incorrecta.");
+                throw new UsuarioException("La CI ingresada es incorrecta, recuerde no utilizar el guion.");
             }
         }
     }

@@ -19,11 +19,13 @@ namespace LogicaAplicacion.AplicacionCasosUso.UsuarioCU
         }
         public UsuarioDTO Execute(UsuarioDTO usuarioDTO)
         {
-            // PASA DTO A USUARIO
+            // Pasa DTO a Usuario
             Usuario usuario = usuarioDTO.ToUsuario();
-            // VALIDA EL USUARIO
+
+            // Validar
             usuario.Validar();
-            // AGREGA USUARIO A REPOSITORIO
+
+            // Agregar
             _repository.Add(usuario);
             UsuarioDTO nuevoUsuarioDTO = new UsuarioDTO(usuario);
             return nuevoUsuarioDTO;

@@ -21,13 +21,17 @@ namespace LogicaAplicacion.AplicacionCasosUso.EnvioCU
 
         public UrgenteDTO Execute(UrgenteDTO urgenteDTO)
         {
-            // PASA DTO A Urgente
+            // Pasa dto a urgente
             Urgente urgente = urgenteDTO.ToUrgente();
-            // valida urgente
+
+            // validar
             urgente.Validar();
-            // AGREGA USUARIO A REPOSITORIO
+
+            // agregar usuario a repositorio
             _repository.AddUrgente(urgente);
+
             UrgenteDTO nuevoUrgenteDTO = new UrgenteDTO(urgente);
+
             return nuevoUrgenteDTO;
         }
     }

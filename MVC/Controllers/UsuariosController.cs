@@ -1,5 +1,6 @@
 ﻿using Compartido.DTOs;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.ValueObject;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,10 @@ namespace MVC.Controllers
 
         public IActionResult Index(string name)
         {
-            // METODO ESTATICO DE CLASE STRING SI ES NULL RETORNA "" SINO NAME
+            if(HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             string nombreNoNulo = String.IsNullOrEmpty(name) ? "" : name;
             IEnumerable<UsuarioDTO> usuariosDTO = _usersByName.Execute(nombreNoNulo);
             ViewModelUsuariosIndex viewModel = new ViewModelUsuariosIndex(usuariosDTO);
@@ -40,6 +44,10 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -61,19 +69,38 @@ namespace MVC.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             UsuarioDTO usuarioDTO = _userById.Execute(id);
             return View(usuarioDTO);
         }
         [HttpPost]
         public IActionResult Edit(int id, UsuarioDTO usuarioDTO)
         {
-            _updateUsuario.Execute(id, usuarioDTO);
-            return RedirectToAction(nameof(Index), new { usuarioDTO});
+            try
+            {
+                _updateUsuario.Execute(id, usuarioDTO);
+                return RedirectToAction(nameof(Index), new { usuarioDTO });
+            }
+            catch(UsuarioException ex)
+            {
+                ViewBag.Message = ex.Message;
+
+                UsuarioDTO mismoUsuarioDTO = _userById.Execute(id);
+                return View(mismoUsuarioDTO);
+            }
+            
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
+            if (HttpContext.Session.GetInt32("IdLogueado") == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             UsuarioDTO usuarioDTO = _userById.Execute(id);
             return View(usuarioDTO);
         }

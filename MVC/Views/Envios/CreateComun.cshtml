@@ -12,17 +12,17 @@
     @Html.AntiForgeryToken()
     <div class="form-group">
         <label asp-for="comunDTO.Peso" class="control-label">Peso (kg)</label>
-        <input asp-for="comunDTO.Peso" class="form-control" />
+        <input asp-for="comunDTO.Peso" class="form-control" required/>
     </div>
     <div class="form-group">
-        <label asp-for="comunDTO.ClienteId" class="control-label"></label>
-        <select asp-for="comunDTO.ClienteId" class="form-control" asp-items="Model.Clientes">
+        <label asp-for="comunDTO.ClienteId" class="control-label">Email Cliente</label>
+        <select asp-for="comunDTO.ClienteId" class="form-control" asp-items="Model.Clientes" required>
             <option value="">Seleccione el email del cliente</option>
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="comunDTO.AgenciaId" class="control-label"></label>
-        <select asp-for="comunDTO.AgenciaId" class="form-control" asp-items="Model.Agencias">
+        <label asp-for="comunDTO.AgenciaId" class="control-label">Agencia</label>
+        <select asp-for="comunDTO.AgenciaId" class="form-control" asp-items="Model.Agencias" required>
             <option value="">Seleccione una agencia</option>
         </select>
     </div>

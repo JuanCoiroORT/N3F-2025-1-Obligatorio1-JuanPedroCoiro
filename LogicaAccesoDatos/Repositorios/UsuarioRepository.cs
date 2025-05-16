@@ -1,5 +1,6 @@
 ﻿using LogicaAccesoDatos.Contexto;
 using LogicaNegocio.EntidadesNegocio;
+using LogicaNegocio.ExcepcionesEntidades;
 using LogicaNegocio.Interfaces;
 using LogicaNegocio.ValueObject;
 using System;
@@ -22,27 +23,30 @@ namespace LogicaAccesoDatos.Repositorios
         public Usuario Add(Usuario usuario)
         {
             _contexto.Usuarios.Add(usuario);
+
             _contexto.SaveChanges();
+
             return usuario;
         }
         public Usuario Update(int id, Usuario usuario)
         {
-            // BUSCAR USUARIO
+            // Buscar usuario
             Usuario usuarioBuscado = _contexto.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
-            if (usuarioBuscado == null)
-            {
-                throw new ArgumentException("usuario no encontrado", nameof(usuario));
-            }
-            // ACTUALIZAR PROPIEDADES
+
+            // Actualizar propiedades
             usuarioBuscado.CI = usuario.CI;
             usuarioBuscado.Nombre = usuario.Nombre;
             usuarioBuscado.Apellido = usuario.Apellido;
             usuarioBuscado.Email = usuario.Email;
             usuarioBuscado.Password = usuario.Password;
             usuarioBuscado.Rol = usuario.Rol;
-            // GUARDAR CAMPOS
+
             _contexto.SaveChanges();
+
             return usuario;
+
+
+
         }
 
         public Usuario Delete(int id)
@@ -71,14 +75,36 @@ namespace LogicaAccesoDatos.Repositorios
 
         public IEnumerable<Usuario> GetByName(string name)
         {
+            List<Usuario> usuarios = new List<Usuario>();
+
             if (String.IsNullOrEmpty(name))
             {
-                return _contexto.Usuarios.ToList();
+                // Logica para filtrar a los funcionarios
+                foreach (var usuario in _contexto.Usuarios.ToList())
+                {
+                    if (usuario.Rol == "Funcionario")
+                    {
+                        usuarios.Add(usuario);
+                    }
+                }
             }
             else
             {
-                return _contexto.Usuarios.Where(u => u.Nombre.ToLower().Contains(name.ToLower())).ToList();
+                string nameLower = name.ToLower();
+                
+                //Logica para encontrar por el nombre
+                foreach (var usuario in _contexto.Usuarios.ToList())
+                {
+                    if (usuario.Rol == "Funcionario" &&
+                        usuario.Nombre != null &&
+                        usuario.Nombre.ToLower().Contains(nameLower))
+                    {
+                        usuarios.Add(usuario);
+                    }
+                }
             }
+
+            return usuarios;
         }
 
         public Usuario GetByEmail(string email)

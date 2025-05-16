@@ -51,7 +51,9 @@ namespace LogicaAccesoDatos.Repositorios
 
         public Comun GetComunById(int id)
         {
-            return _contexto.Set<Comun>().FirstOrDefault(c => c.Id == id);
+            return _contexto.Set<Comun>()
+                .Include(c => c.Agencia)
+                .FirstOrDefault(c => c.Id == id);
         }
         public Urgente GetUrgenteById(int id)
         {

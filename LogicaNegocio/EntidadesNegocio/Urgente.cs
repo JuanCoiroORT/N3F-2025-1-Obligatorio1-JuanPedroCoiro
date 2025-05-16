@@ -24,9 +24,13 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            if(DireccionPostal == 0)
+            if(DireccionPostal <= 0)
             {
                 throw new EnvioException("El codigo postal ingresado es incorrecto.");
+            }
+            if(Peso <= 0)
+            {
+                throw new EnvioException("El peso del envio debe ser mayor a 0.");
             }
         }
 
