@@ -17,7 +17,9 @@ namespace LogicaNegocio.Interfaces
         Urgente GetUrgenteById(int id);
         Envio Update(int id, Envio envio);  
         void DeleteUrgente(int id);
-
         void DeleteComun(int id);
+        bool ExisteNumTracking(double numTracking);
+        Envio GetByNumTracking(double numTracking);
+
     }
 }

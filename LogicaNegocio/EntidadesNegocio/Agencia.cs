@@ -26,7 +26,6 @@ namespace LogicaNegocio.EntidadesNegocio
         }
 
         public Agencia() { }
-
         public void Validar()
         {
             if (String.IsNullOrEmpty(Nombre))

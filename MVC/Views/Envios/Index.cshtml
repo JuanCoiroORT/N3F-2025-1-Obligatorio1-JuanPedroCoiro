@@ -16,6 +16,7 @@
             <th>Direccion Postal</th>
             <th>Peso</th>
             <th>Seguimiento</th>
+            <th>Tracking</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
                 <td>@urgente.DireccionPostal</td>
                 <td>@urgente.Peso</td>
                 <td>@(urgente.Seguimientos?.LastOrDefault()?.Comentario ?? "Sin Comentario")</td>
+                <td>@urgente.NumTracking</td>
                 <td>
                     <a asp-action="EditUrgente" asp-route-id="@urgente.Id" class="btn btn-info">Agregar Comentario</a>
                 </td>
@@ -48,6 +50,7 @@
                 <td>@comun.Agencia.DireccionPostal</td>
                 <td>@comun.Peso</td>
                 <td>@(comun.Seguimientos?.LastOrDefault()?.Comentario ?? "Sin Comentario")</td>
+                <td>@comun.NumTracking</td>
                 <td>
                     <a asp-action="EditComun" asp-route-id="@comun.Id" class="btn btn-info">Agregar Comentario</a>
                 </td>

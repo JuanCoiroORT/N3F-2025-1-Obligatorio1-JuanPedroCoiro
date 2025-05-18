@@ -50,6 +50,7 @@ namespace WEBAPI
             builder.Services.AddScoped(typeof(IUpdateEnvio), typeof(UpdateEnvio));
             builder.Services.AddScoped(typeof(IDeleteUrgente), typeof(DeleteUrgente));
             builder.Services.AddScoped(typeof(IDeleteComun), typeof(DeleteComun));
+            builder.Services.AddScoped(typeof(IGetByNumTracking), typeof(GetByNumTracking));
 
             // Dependecias Agencia
             builder.Services.AddScoped(typeof(IAgenciaRepository), typeof(AgenciaRepository));

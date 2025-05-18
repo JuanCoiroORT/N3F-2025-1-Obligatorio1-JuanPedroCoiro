@@ -31,12 +31,13 @@ namespace MVC.Controllers
         private IGetAgenciaById _getAgenciaById;
         private IDeleteUrgente _deleteUrgente;
         private IDeleteComun _deleteComun;
+        private IExisteNumTracking _existeNumTracking;
 
         public EnviosController(IGetAllComunes getAllComunes, IGetAllUrgentes getAllUrgentes,
             ICrearUrgente crearUrgente, IGetUserByEmail getUsersByEmail, ICrearComun crearComun,
             IGetUserById getUserById, IGetAgencias getAgencias, IGetClientes getClientes, IGetAgenciaById getAgenciaById,
             IGetUrgenteById getUrgenteById, IUpdateEnvio updateEnvio, IGetComunById getComunById, IDeleteUrgente deleteUrgente,
-            IDeleteComun deleteComun)
+            IDeleteComun deleteComun, IExisteNumTracking existeNumTracking)
         {
             _getAllComunes = getAllComunes;
             _getAllUrgentes = getAllUrgentes;
@@ -52,6 +53,7 @@ namespace MVC.Controllers
             _getClientes = getClientes;
             _deleteUrgente = deleteUrgente;
             _deleteComun = deleteComun;
+            _existeNumTracking = existeNumTracking;
         }
         public IActionResult Index()
         {
@@ -189,6 +191,14 @@ namespace MVC.Controllers
                 comunDTO.EmpleadoId = empleadoDTO.Id;
                 comunDTO.AgenciaId = agenciaDTO.Id;
                 comunDTO.Estado = "EN_PROCESO";
+                //Asignar numero de tracking unico
+                double numTracking;
+                do
+                {
+                    Random random = new Random();
+                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0);
+                } while (_existeNumTracking.Execute(numTracking));
+                comunDTO.NumTracking = numTracking;
                 
                 // Crear el envio
                 _crearComun.Execute(comunDTO);

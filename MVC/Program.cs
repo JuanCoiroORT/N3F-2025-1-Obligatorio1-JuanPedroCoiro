@@ -48,6 +48,7 @@ namespace MVC
             builder.Services.AddScoped(typeof(IUpdateEnvio), typeof(UpdateEnvio));
             builder.Services.AddScoped(typeof(IDeleteUrgente), typeof(DeleteUrgente));
             builder.Services.AddScoped(typeof(IDeleteComun), typeof(DeleteComun));
+            builder.Services.AddScoped(typeof(IExisteNumTracking), typeof(ExisteNumTracking));
 
             // Dependecias Agencia
             builder.Services.AddScoped(typeof(IAgenciaRepository), typeof(AgenciaRepository));

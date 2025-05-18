@@ -154,5 +154,15 @@ namespace LogicaAccesoDatos.Repositorios
             _contexto.Envios.Remove(comun);
             _contexto.SaveChanges();
         }
+
+        public bool ExisteNumTracking(double numTracking)
+        {
+            return _contexto.Envios.Any(e => e.NumTracking == numTracking);
+        }
+
+        public Envio GetByNumTracking(double numTracking)
+        {
+            return _contexto.Set<Envio>().FirstOrDefault(e => e.NumTracking == numTracking);
+        }
     }
 }
