@@ -17,24 +17,21 @@ namespace Compartido.DTOs
         {
             Id = usuario.Id;
             CI = usuario.CI;
-            Nombre = usuario.Nombre;
-            Apellido = usuario.Apellido;
+            Nombre = usuario.NombreCompleto.Nombre;
+            Apellido = usuario.NombreCompleto.Apellido;
             Email = usuario.Email;
             Password = usuario.Password;
             Rol = usuario.Rol;
         }
 
-        public UsuarioDTO()
-        {
-        }
+        public UsuarioDTO() { }
 
         public Usuario ToUsuario()
         {
             Usuario usuario = new Usuario()
             {
                 Id = this.Id,
-                Nombre = this.Nombre,
-                Apellido = this.Apellido,
+                NombreCompleto = new NombreCompleto(this.Nombre, this.Apellido),
                 CI = this.CI,
                 Email = this.Email,
                 Password = this.Password,

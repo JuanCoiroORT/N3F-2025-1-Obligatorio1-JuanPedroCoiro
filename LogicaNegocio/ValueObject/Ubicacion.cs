@@ -19,15 +19,17 @@ namespace LogicaNegocio.ValueObject
             Validar();
         }
 
+        public Ubicacion() { }  
+
         private void Validar()
         {
-            if(Latitud <= -90 && Latitud >= 90)
+            if(Latitud < -90 && Latitud > 90)
             {
-                throw new UsuarioException("Latitud invalida.");
+                throw new UsuarioException("Latitud fuera de rango.");
             }
-            if(Longitud <= -180 && Longitud >= 180)
+            if(Longitud < -180 && Longitud > 180)
             {
-                throw new UsuarioException("Longitud invalida");
+                throw new UsuarioException("Longitud fuera de rango.");
             }
         }
     }

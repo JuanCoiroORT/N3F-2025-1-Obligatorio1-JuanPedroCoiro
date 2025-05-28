@@ -17,6 +17,7 @@ namespace LogicaAccesoDatos.Contexto
         public DbSet<Envio> Envios { get; set; }
         public DbSet<Seguimiento> Seguimientos { get; set; }
         public DbSet<Agencia> Agencias { get; set; }
+        public DbSet<EnvioEliminado> EnviosEliminados { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,30 @@ namespace LogicaAccesoDatos.Contexto
                 .WithMany()
                 .HasForeignKey(c => c.AgenciaId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<EnvioEliminado>()
+            .HasDiscriminator<string>("Tipo")
+            .HasValue<ComunEliminado>("Comun")
+            .HasValue<UrgenteEliminado>("Urgente");
+
+            modelBuilder.Entity<Agencia>(ag =>
+            {
+                ag.OwnsOne(a => a.Ubicacion, ubic =>
+                {
+                    ubic.Property(u => u.Latitud).HasColumnName("Latitud").IsRequired();
+                    ubic.Property(u => u.Longitud).HasColumnName("Longitud").IsRequired();
+                });
+            });
+
+            modelBuilder.Entity<Usuario>(usuario =>
+            {
+                usuario.OwnsOne(u => u.NombreCompleto, nombre =>
+                {
+                    nombre.Property(n => n.Nombre).HasColumnName("Nombre").HasMaxLength(100);
+                    nombre.Property(n => n.Apellido).HasColumnName("Apellido").HasMaxLength(100);
+                });
+            });
+
 
             base.OnModelCreating(modelBuilder);
         }

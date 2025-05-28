@@ -109,6 +109,14 @@ namespace MVC.Controllers
                 urgenteDTO.ClienteId = clienteDTO.Id;
                 urgenteDTO.EmpleadoId = empleadoDTO.Id;
                 urgenteDTO.Estado = "EN_PROCESO";
+                //Asignar numero de tracking unico
+                double numTracking;
+                do
+                {
+                    Random random = new Random();
+                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0);
+                } while (_existeNumTracking.Execute(numTracking));
+                urgenteDTO.NumTracking = numTracking;
 
 
                 // Crear el envio

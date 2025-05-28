@@ -14,10 +14,10 @@ namespace LogicaNegocio.EntidadesNegocio
         private static int s_ultId;
         public string Nombre { get; set; }
         public int DireccionPostal { get; set; }
-        public double Ubicacion { get; set; }
+        public Ubicacion Ubicacion { get; set; }
 
         //CONSTRUCTOR
-        public Agencia(string nombre, int direccionPostal, double ubicacion)
+        public Agencia(string nombre, int direccionPostal, Ubicacion ubicacion)
         {
             Nombre = nombre;
             DireccionPostal = direccionPostal;
@@ -38,7 +38,7 @@ namespace LogicaNegocio.EntidadesNegocio
             }
             if(Ubicacion == null)
             {
-                throw new AgenciaException("Ubicacion incorrecta.");
+                throw new AgenciaException("Ubicacion requerida.");
             }
         }
 

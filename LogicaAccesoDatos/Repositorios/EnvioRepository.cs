@@ -143,15 +143,38 @@ namespace LogicaAccesoDatos.Repositorios
 
         public void DeleteUrgente(int id)
         {
+            //Encontrar el envio urgente
             Urgente urgente =  _contexto.Envios.OfType<Urgente>().FirstOrDefault(e => e.Id == id);
+
+            // Crear el regitro eliminado
+            UrgenteEliminado urgenteEliminado = new UrgenteEliminado(urgente);
+            urgenteEliminado.Estado = "FINALIZADO";
+
+            // Agregar a la tabla auditoria
+            _contexto.EnviosEliminados.Add(urgenteEliminado);
+
+            // Eliminar de la tabla principal
             _contexto.Envios.Remove(urgente);
+
+            // Guardar cambios
             _contexto.SaveChanges();
         }
 
         public void DeleteComun(int id)
         {
+            //Encontrar el envio comun
             Comun comun = _contexto.Envios.OfType<Comun>().FirstOrDefault(e => e.Id == id);
+
+            // Crear el registro elimnado
+            ComunEliminado comunEliminado = new ComunEliminado(comun);
+
+            // Agregar a la tabla auditoria
+            _contexto.EnviosEliminados.Add(comunEliminado);
+
+            //Eliminar de la tabla principal
             _contexto.Envios.Remove(comun);
+
+            //Guardar cambios
             _contexto.SaveChanges();
         }
 

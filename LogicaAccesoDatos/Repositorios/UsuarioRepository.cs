@@ -35,8 +35,7 @@ namespace LogicaAccesoDatos.Repositorios
 
             // Actualizar propiedades
             usuarioBuscado.CI = usuario.CI;
-            usuarioBuscado.Nombre = usuario.Nombre;
-            usuarioBuscado.Apellido = usuario.Apellido;
+            usuarioBuscado.NombreCompleto = new NombreCompleto(usuario.NombreCompleto.Nombre, usuario.NombreCompleto.Apellido);
             usuarioBuscado.Email = usuario.Email;
             usuarioBuscado.Password = usuario.Password;
             usuarioBuscado.Rol = usuario.Rol;
@@ -44,9 +43,6 @@ namespace LogicaAccesoDatos.Repositorios
             _contexto.SaveChanges();
 
             return usuario;
-
-
-
         }
 
         public Usuario Delete(int id)
@@ -96,8 +92,8 @@ namespace LogicaAccesoDatos.Repositorios
                 foreach (var usuario in _contexto.Usuarios.ToList())
                 {
                     if (usuario.Rol == "Funcionario" &&
-                        usuario.Nombre != null &&
-                        usuario.Nombre.ToLower().Contains(nameLower))
+                        usuario.NombreCompleto != null &&
+                        usuario.NombreCompleto.Nombre.ToLower().Contains(nameLower))
                     {
                         usuarios.Add(usuario);
                     }

@@ -2,6 +2,7 @@
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.Interfaces;
+using LogicaNegocio.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;

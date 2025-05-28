@@ -22,17 +22,15 @@ namespace LogicaNegocio.ValueObject
             Validar();
         }
 
-        public NombreCompleto()
-        {
-        }
+        public NombreCompleto() { }
 
         private void Validar()
         {
-            if (String.IsNullOrEmpty(Nombre))
+            if (String.IsNullOrEmpty(Nombre) || Nombre.Length < 3)
             {
                 throw new UsuarioException("Ingrese un nombre.");
             }
-            if (String.IsNullOrEmpty(Apellido))
+            if (String.IsNullOrEmpty(Apellido) || Apellido.Length < 3)
             {
                 throw new UsuarioException("Ingrese un apellido.");
             }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(AppDbContexto))]
-    [Migration("20250518193903_MigracionFinal")]
-    partial class MigracionFinal
+    [Migration("20250528174613_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,6 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Ubicacion")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -90,6 +87,47 @@ namespace LogicaAccesoDatos.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.EnvioEliminado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("NumTracking")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Peso")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EnviosEliminados");
+
+                    b.HasDiscriminator<string>("Tipo").HasValue("EnvioEliminado");
+
+                    b.UseTphMappingStrategy();
+                });
+
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Seguimiento", b =>
                 {
                     b.Property<int>("Id")
@@ -128,19 +166,11 @@ namespace LogicaAccesoDatos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Apellido")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CI")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -182,6 +212,56 @@ namespace LogicaAccesoDatos.Migrations
                     b.HasDiscriminator().HasValue("Urgente");
                 });
 
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.ComunEliminado", b =>
+                {
+                    b.HasBaseType("LogicaNegocio.EntidadesNegocio.EnvioEliminado");
+
+                    b.Property<int>("AgenciaId")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Comun");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.UrgenteEliminado", b =>
+                {
+                    b.HasBaseType("LogicaNegocio.EntidadesNegocio.EnvioEliminado");
+
+                    b.Property<int>("DireccionPostal")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Eficiente")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Urgente");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Agencia", b =>
+                {
+                    b.OwnsOne("LogicaNegocio.ValueObject.Ubicacion", "Ubicacion", b1 =>
+                        {
+                            b1.Property<int>("AgenciaId")
+                                .HasColumnType("int");
+
+                            b1.Property<double>("Latitud")
+                                .HasColumnType("float")
+                                .HasColumnName("Latitud");
+
+                            b1.Property<double>("Longitud")
+                                .HasColumnType("float")
+                                .HasColumnName("Longitud");
+
+                            b1.HasKey("AgenciaId");
+
+                            b1.ToTable("Agencias");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AgenciaId");
+                        });
+
+                    b.Navigation("Ubicacion")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Envio", b =>
                 {
                     b.HasOne("LogicaNegocio.EntidadesNegocio.Usuario", "Cliente")
@@ -218,6 +298,37 @@ namespace LogicaAccesoDatos.Migrations
                     b.Navigation("Empleado");
 
                     b.Navigation("Envio");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>
+                {
+                    b.OwnsOne("LogicaNegocio.ValueObject.NombreCompleto", "NombreCompleto", b1 =>
+                        {
+                            b1.Property<int>("UsuarioId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Apellido")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("Apellido");
+
+                            b1.Property<string>("Nombre")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("Nombre");
+
+                            b1.HasKey("UsuarioId");
+
+                            b1.ToTable("Usuarios");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UsuarioId");
+                        });
+
+                    b.Navigation("NombreCompleto")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Comun", b =>
