@@ -33,20 +33,25 @@ namespace WEBAPI.Controllers
 
 
         [HttpGet]
-        public IActionResult  Get()
+        public IActionResult Get([FromBody] string name = "")
         {
-            IEnumerable<UsuarioDTO> usuariosDTO = _usersByName.Execute("");
+            IEnumerable<UsuarioDTO> usuariosDTO = _usersByName.Execute(name);
             return Ok(usuariosDTO);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
-            UsuarioDTO usuarioDTO = _userById.Execute(id);
-            if (usuarioDTO == null)
-                return NotFound();
+            try
+            {
+                UsuarioDTO usuarioDTO = _userById.Execute(id);
+                return Ok(usuarioDTO);
 
-            return Ok(usuarioDTO);
+            }
+            catch(UsuarioException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -65,6 +70,22 @@ namespace WEBAPI.Controllers
                 return BadRequest(new { error = ex.Message});
             }
            
+        }
+
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] UsuarioDTO usuarioDTO)
+        {
+            try
+            {
+                UsuarioDTO usuarioDTOUpd = _updateUsuario.Execute(id, usuarioDTO);
+                return Ok(usuarioDTO);
+
+            }
+            catch (UsuarioException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
     }
 }

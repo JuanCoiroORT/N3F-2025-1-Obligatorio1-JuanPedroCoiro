@@ -23,12 +23,18 @@ namespace LogicaAplicacion.AplicacionCasosUso.UsuarioCU
         {
             //Pasa dto a usuario
             Usuario usuario = usuarioDTO.ToUsuario();
+            if (usuario == null)
+            {
+                throw new UsuarioException("Usuario no existe.");
+            }
 
             //Validar
             usuario.Validar();
 
+            // Ejecutar Update
             _repository.Update(id, usuario);
 
+            // Devolver usuarionuevoDTO
             UsuarioDTO usuarioEditadoDTO = new UsuarioDTO(usuario);
             return usuarioEditadoDTO;
         }
