@@ -45,7 +45,7 @@ namespace MVC.Controllers
         public IActionResult Login(string email, string password)
         {
             // VALIDACION USUARIO
-            Usuario usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email && u.Password == password);
+            Usuario usuario = _context.Usuarios.FirstOrDefault(u => u.Email.Valor == email && u.Password == password);
             if(usuario == null)
             {
                 ViewBag.Message = "Credenciales incorrectas";

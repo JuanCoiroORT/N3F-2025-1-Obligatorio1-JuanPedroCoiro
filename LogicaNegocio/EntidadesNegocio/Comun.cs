@@ -30,10 +30,6 @@ namespace LogicaNegocio.EntidadesNegocio
             }
         }
 
-        // METODO PARA FINALIZAR ENVIO
-        public override void FinalizarEnvio()
-        {
-            Estado = "FINALIZADO";
-        }
+     
     }
 }

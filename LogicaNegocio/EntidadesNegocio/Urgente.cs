@@ -10,6 +10,7 @@ namespace LogicaNegocio.EntidadesNegocio
 {
     public class Urgente : Envio
     {
+        public DateTime FechaCreacion { get; set; } 
         public int DireccionPostal { get; set; }
         public bool Eficiente { get; set; }
         
@@ -17,6 +18,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public Urgente(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, int direccionPostal, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
         {
             DireccionPostal = direccionPostal;
+            FechaCreacion = DateTime.Now;
             Eficiente = false;
             Estado = string.IsNullOrEmpty(estado) ? "EN_PROCESO" : estado;
             Validar();
@@ -36,11 +38,6 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public Urgente() { }
 
-        // METODO PARA FINALIZAR ENVIO
-        public override void FinalizarEnvio()
-        {
-            Estado = "FINALIZADO";
-            // CALCULAR TIEMPO DE LA ENTREGA
-        }
+        
     }
 }

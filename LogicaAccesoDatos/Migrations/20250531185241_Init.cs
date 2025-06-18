@@ -41,6 +41,7 @@ namespace LogicaAccesoDatos.Migrations
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     AgenciaId = table.Column<int>(type: "int", nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DireccionPostal = table.Column<int>(type: "int", nullable: true),
                     Eficiente = table.Column<bool>(type: "bit", nullable: true)
                 },
@@ -58,7 +59,7 @@ namespace LogicaAccesoDatos.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CI = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rol = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -80,6 +81,7 @@ namespace LogicaAccesoDatos.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     AgenciaId = table.Column<int>(type: "int", nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DireccionPostal = table.Column<int>(type: "int", nullable: true),
                     Eficiente = table.Column<bool>(type: "bit", nullable: true)
                 },

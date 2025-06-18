@@ -75,6 +75,14 @@ namespace LogicaAccesoDatos.Contexto
                 });
             });
 
+            modelBuilder.Entity<Usuario>(usuario =>
+            {
+                usuario.OwnsOne(u => u.Email, email =>
+                {
+                    email.Property(e => e.Valor).HasColumnName("Email").HasMaxLength(100);
+                });
+            });
+
 
             base.OnModelCreating(modelBuilder);
         }

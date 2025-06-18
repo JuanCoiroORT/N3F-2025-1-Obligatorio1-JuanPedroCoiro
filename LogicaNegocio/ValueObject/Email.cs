@@ -16,18 +16,15 @@ namespace LogicaNegocio.ValueObject
             Valor = valor;
             Validar();
         }
-        
+
         private void Validar()
         {
-            if (String.IsNullOrEmpty(Valor))
+            if (String.IsNullOrEmpty(Valor) || Valor.Length < 7 || !Valor.Contains("@") || !Valor.Contains(".com"))
             {
-                throw new UsuarioException("Ingrese un email.");
-            }
-            if (!Valor.Contains("@"))
-            {
-                throw new UsuarioException("El email ingresado no es correcto.");
+                throw new UsuarioException("Email invalido.");
             }
         }
+       
 
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(AppDbContexto))]
-    [Migration("20250528174613_Init")]
+    [Migration("20250531185241_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -170,10 +170,6 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -209,6 +205,9 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<bool>("Eficiente")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
                     b.HasDiscriminator().HasValue("Urgente");
                 });
 
@@ -231,6 +230,9 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<bool>("Eficiente")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Urgente");
                 });
@@ -302,6 +304,25 @@ namespace LogicaAccesoDatos.Migrations
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>
                 {
+                    b.OwnsOne("LogicaNegocio.ValueObject.Email", "Email", b1 =>
+                        {
+                            b1.Property<int>("UsuarioId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Valor")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("UsuarioId");
+
+                            b1.ToTable("Usuarios");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UsuarioId");
+                        });
+
                     b.OwnsOne("LogicaNegocio.ValueObject.NombreCompleto", "NombreCompleto", b1 =>
                         {
                             b1.Property<int>("UsuarioId")
@@ -326,6 +347,9 @@ namespace LogicaAccesoDatos.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UsuarioId");
                         });
+
+                    b.Navigation("Email")
+                        .IsRequired();
 
                     b.Navigation("NombreCompleto")
                         .IsRequired();

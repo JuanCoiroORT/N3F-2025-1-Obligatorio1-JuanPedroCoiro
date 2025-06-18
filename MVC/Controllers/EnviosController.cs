@@ -24,7 +24,6 @@ namespace MVC.Controllers
         private IGetUrgenteById _getUrgenteById;
         private IGetComunById _getComunById;
         private IUpdateEnvio _updateEnvio;
-        private IGetUserByEmail _getUserByEmail;
         private IGetUserById _getUserById;
         private IGetAgencias _getAgencias;
         private IGetClientes _getClientes;
@@ -34,7 +33,7 @@ namespace MVC.Controllers
         private IExisteNumTracking _existeNumTracking;
 
         public EnviosController(IGetAllComunes getAllComunes, IGetAllUrgentes getAllUrgentes,
-            ICrearUrgente crearUrgente, IGetUserByEmail getUsersByEmail, ICrearComun crearComun,
+            ICrearUrgente crearUrgente, ICrearComun crearComun,
             IGetUserById getUserById, IGetAgencias getAgencias, IGetClientes getClientes, IGetAgenciaById getAgenciaById,
             IGetUrgenteById getUrgenteById, IUpdateEnvio updateEnvio, IGetComunById getComunById, IDeleteUrgente deleteUrgente,
             IDeleteComun deleteComun, IExisteNumTracking existeNumTracking)
@@ -47,7 +46,6 @@ namespace MVC.Controllers
             _getComunById = getComunById;
             _getUrgenteById = getUrgenteById;
             _updateEnvio = updateEnvio;
-            _getUserByEmail = getUsersByEmail;
             _getUserById = getUserById;
             _getAgencias = getAgencias;
             _getClientes = getClientes;
@@ -78,7 +76,7 @@ namespace MVC.Controllers
             IEnumerable<UsuarioDTO> clientesDTO = _getClientes.Execute();
             var clientesSelect = clientesDTO.Select(c => new SelectListItem
             {
-                Text = c.Email,
+                Text = c.Email.Valor,
                 Value = c.Id.ToString()
             }).ToList();
 
@@ -133,7 +131,7 @@ namespace MVC.Controllers
                 // Volver a cargar el vm por si hay error al enviar formulario
                 vm.Clientes = _getClientes.Execute().Select(c => new SelectListItem
                 {
-                    Text = c.Email,
+                    Text = c.Email.Valor,
                     Value = c.Id.ToString()
                 }).ToList();
 
@@ -161,7 +159,7 @@ namespace MVC.Controllers
             IEnumerable<UsuarioDTO> clientesDTO = _getClientes.Execute();
             var clientesSelect = clientesDTO.Select(c => new SelectListItem
             {
-                Text = c.Email,
+                Text = c.Email.Valor,
                 Value = c.Id.ToString()
             }).ToList();
 
@@ -228,7 +226,7 @@ namespace MVC.Controllers
 
                 vm.Clientes = _getClientes.Execute().Select(c => new SelectListItem
                 {
-                    Text = c.Email,
+                    Text = c.Email.Valor,
                     Value = c.Id.ToString()
                 }).ToList();
 

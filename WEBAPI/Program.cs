@@ -36,7 +36,6 @@ namespace WEBAPI
             builder.Services.AddScoped(typeof(IUpdateUsuario), typeof(UpdateUsuario));
             builder.Services.AddScoped(typeof(IGetUserById), typeof(GetUserById));
             builder.Services.AddScoped(typeof(IGetUsersByName), typeof(GetUsersByName));
-            builder.Services.AddScoped(typeof(IGetUserByEmail), typeof(GetUserByEmail));
             builder.Services.AddScoped(typeof(IGetClientes), typeof(GetClientes));
 
             // Dependencias Envio

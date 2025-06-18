@@ -103,10 +103,6 @@ namespace LogicaAccesoDatos.Repositorios
             return usuarios;
         }
 
-        public Usuario GetByEmail(string email)
-        {
-            return _contexto.Set<Usuario>().FirstOrDefault(u => u.Email == email);
-        }
 
         public IEnumerable<Usuario> GetClientes()
         {

@@ -148,7 +148,16 @@ namespace LogicaAccesoDatos.Repositorios
 
             // Crear el regitro eliminado
             UrgenteEliminado urgenteEliminado = new UrgenteEliminado(urgente);
+
+            // Camiar estado
             urgenteEliminado.Estado = "FINALIZADO";
+
+            // Calcular si fue eficiente y asignar
+            TimeSpan duracion = urgenteEliminado.FechaCreacion - urgenteEliminado.FechaEliminacion;
+            if ( duracion.Days < 1)
+            {
+                urgenteEliminado.Eficiente = true;
+            }
 
             // Agregar a la tabla auditoria
             _contexto.EnviosEliminados.Add(urgenteEliminado);

@@ -30,7 +30,6 @@ namespace LogicaNegocio.EntidadesNegocio
             Seguimientos = seguimientos;
         }
         public Envio() { }
-        // METODO PARA FINALIZAR ENVIO
-        public abstract void FinalizarEnvio();
+        
     }
 }

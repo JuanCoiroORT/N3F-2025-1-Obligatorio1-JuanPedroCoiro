@@ -14,12 +14,12 @@ namespace LogicaNegocio.EntidadesNegocio
         private static int s_ultId;
         public NombreCompleto NombreCompleto { get; set; }
         public string CI { get; set; }
-        public string Email { get; set; }
+        public Email Email { get; set; }
         public string Password { get; set; }
         public string Rol { get; set; }
 
         //CONSTRUCTORES
-        public Usuario(NombreCompleto nombreCompleto, string ci, string email, string password, string rol)
+        public Usuario(NombreCompleto nombreCompleto, string ci, Email email, string password, string rol)
         {
             NombreCompleto = nombreCompleto;
             CI = ci;
@@ -35,15 +35,15 @@ namespace LogicaNegocio.EntidadesNegocio
 
         public void Validar()
         {
-            if (String.IsNullOrEmpty(Email) || Email.Length < 7 || !Email.Contains("@") || !Email.Contains(".com"))
+            if(Email == null)
             {
-                throw new UsuarioException("Email invalido.");
+                throw new UsuarioException("Ingrese un email valido");
             }
             if (NombreCompleto == null)
             {
                 throw new UsuarioException("Ingrese un nombre correcto.");
             }
-            if (String.IsNullOrEmpty(Email) || Password.Length < 8)
+            if (String.IsNullOrEmpty(Password) || Password.Length < 8)
             {
                 throw new UsuarioException("La Password debe tener al menos 8 caracteres.");
             }

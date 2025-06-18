@@ -11,7 +11,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public int AgenciaId { get; set; }
 
         public ComunEliminado() { }
-        public ComunEliminado(Comun envio) : base(envio)
+        public ComunEliminado(Comun envio) : base(envio) // TODO base
         {
             AgenciaId = envio.AgenciaId;
         }
