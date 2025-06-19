@@ -10,6 +10,13 @@ using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using WEBAPI.Servicios;
+
+
+
 namespace WEBAPI
 {
     public class Program
@@ -28,6 +35,10 @@ namespace WEBAPI
             );
 
             // INYECCION DE DEPENDENCIAS
+
+            //Inyeccion TokenService
+            builder.Services.AddSingleton(new TokenService("ClaveSuperSecretaQueDebeSerLarga123!"));
+
 
             // Dependencia Usuario
             builder.Services.AddScoped(typeof(IUsuarioRepository), typeof(UsuarioRepository));
@@ -63,6 +74,33 @@ namespace WEBAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //JWT
+            // Clave secreta para firmar el token JWT
+            var jwtKey = "ClaveSuperSecretaQueDebeSerLarga123!"; // Podés ponerla en appsettings.json también
+
+            // Agregá el TokenService como servicio (opcional pero mejor)
+            builder.Services.AddSingleton(new TokenService(jwtKey));
+
+            // Configurar JWT Bearer
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false, // simplificamos
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -72,6 +110,7 @@ namespace WEBAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication(); //JWT
             app.UseAuthorization();
 
 

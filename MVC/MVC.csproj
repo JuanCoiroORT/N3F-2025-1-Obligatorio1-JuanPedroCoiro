@@ -20,6 +20,7 @@
     <ProjectReference Include="..\LogicaAccesoDatos\LogicaAccesoDatos.csproj" />
     <ProjectReference Include="..\LogicaAplicacion\LogicaAplicacion.csproj" />
     <ProjectReference Include="..\LogicaNegocio\LogicaNegocio.csproj" />
+    <ProjectReference Include="..\WEBAPI\WEBAPI.csproj" />
   </ItemGroup>
 
 </Project>
