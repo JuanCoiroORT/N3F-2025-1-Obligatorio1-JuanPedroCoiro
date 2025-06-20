@@ -20,8 +20,9 @@ namespace WEBAPI.Servicios
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.NombreCompleto, usuario.NombreCompleto),
-                new Claim(ClaimTypes.Email, usuario.Email.Valor) // si es VO
+                new Claim(ClaimTypes.Name, usuario.NombreCompleto.Nombre),
+                new Claim(ClaimTypes.Email, usuario.Email.Valor),
+                new Claim(ClaimTypes.Role, usuario.Rol)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));

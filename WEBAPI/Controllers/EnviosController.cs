@@ -3,6 +3,7 @@ using LogicaAplicacion.AplicacionCasosUso.UsuarioCU;
 using LogicaAplicacion.Interfaces.EnvioInterfaces;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
 using LogicaNegocio.ExcepcionesEntidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,8 @@ namespace WEBAPI.Controllers
 
 
         [HttpGet("{numTracking}")]
-        public IActionResult GetByNumTracking(double numTracking)
+        [AllowAnonymous]
+        public IActionResult GetByNumTracking(string numTracking)
         {
             EnvioDTO envioDTO = _getByNumTracking.Execute(numTracking);
 

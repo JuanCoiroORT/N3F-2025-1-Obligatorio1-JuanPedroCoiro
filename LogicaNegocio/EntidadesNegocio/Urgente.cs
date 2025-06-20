@@ -15,7 +15,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public bool Eficiente { get; set; }
         
         //CONSTRUCTOR
-        public Urgente(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, int direccionPostal, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
+        public Urgente(string numTracking, Usuario empleado, Usuario cliente, double peso, string estado, int direccionPostal, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
         {
             DireccionPostal = direccionPostal;
             FechaCreacion = DateTime.Now;

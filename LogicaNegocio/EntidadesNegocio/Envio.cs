@@ -10,7 +10,7 @@ namespace LogicaNegocio.EntidadesNegocio
     {
         public int Id { get; set; }
         private static int s_ultId;
-        public double NumTracking { get; set; }
+        public string NumTracking { get; set; }
         public Usuario Empleado { get; set; }
         public int EmpleadoId { get; set; }
         public Usuario Cliente { get; set; }
@@ -20,7 +20,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public List<Seguimiento> Seguimientos { get; set; } = new List<Seguimiento>();
 
         //CONSTRUCTOR
-        public Envio(double numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimientos)
+        public Envio(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimientos)
         {
             NumTracking = numTracking;
             Empleado = empleado;

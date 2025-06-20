@@ -187,12 +187,12 @@ namespace LogicaAccesoDatos.Repositorios
             _contexto.SaveChanges();
         }
 
-        public bool ExisteNumTracking(double numTracking)
+        public bool ExisteNumTracking(string numTracking)
         {
             return _contexto.Envios.Any(e => e.NumTracking == numTracking);
         }
 
-        public Envio GetByNumTracking(double numTracking)
+        public Envio GetByNumTracking(string numTracking)
         {
             return _contexto.Set<Envio>().FirstOrDefault(e => e.NumTracking == numTracking);
         }

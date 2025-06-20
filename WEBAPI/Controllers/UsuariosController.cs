@@ -1,9 +1,13 @@
 using Compartido.DTOs;
+using Excepciones;
 using LogicaAplicacion.AplicacionCasosUso.UsuarioCU;
 using LogicaAplicacion.Interfaces.UsuarioInterfaces;
+using LogicaNegocio.EntidadesNegocio;
 using LogicaNegocio.ExcepcionesEntidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace WEBAPI.Controllers
 {
@@ -12,79 +16,31 @@ namespace WEBAPI.Controllers
     public class UsuariosController : ControllerBase
     {
 
-        private ICrearUsuario _crearUsuario;
+
         private IUpdateUsuario _updateUsuario;
-        private IDeleteUsuario _deleteUsuario;
-        private IGetUserById _userById;
-        private IGetUsersByName _usersByName;
+        private IGetUserById _getUserById;
 
-        public UsuariosController(ICrearUsuario crearUsuario,
-                                    IGetUserById userById,
-                                    IGetUsersByName usersByName,
-                                    IDeleteUsuario deleteUsuario,
-                                    IUpdateUsuario updateUsuario)
+        public UsuariosController(IUpdateUsuario updateUsuario, IGetUserById getUserById)
         {
-            _crearUsuario = crearUsuario;
-            _userById = userById;
-            _usersByName = usersByName;
-            _deleteUsuario = deleteUsuario;
             _updateUsuario = updateUsuario;
+            _getUserById = getUserById;
         }
-
-
-        [HttpGet]
-        public IActionResult Get([FromBody] string name = "")
-        {
-            IEnumerable<UsuarioDTO> usuariosDTO = _usersByName.Execute(name);
-            return Ok(usuariosDTO);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
-        {
-            try
-            {
-                UsuarioDTO usuarioDTO = _userById.Execute(id);
-                return Ok(usuarioDTO);
-
-            }
-            catch(UsuarioException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult Post([FromBody] UsuarioDTO usuarioDTO)
-        {
-            try
-            {
-                UsuarioDTO nuevoUsuarioDTO = _crearUsuario.Execute(usuarioDTO);
-
-                // 200 usuario creado
-                return Ok(nuevoUsuarioDTO);
-            }
-            catch (UsuarioException ex)
-            {
-                // 400 Bad Request
-                return BadRequest(new { error = ex.Message});
-            }
-           
-        }
-
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UsuarioDTO usuarioDTO)
         {
             try
             {
-                UsuarioDTO usuarioDTOUpd = _updateUsuario.Execute(id, usuarioDTO);
-                return Ok(usuarioDTO);
-
+                _updateUsuario.Execute(id, usuarioDTO);
+                return Ok(); // 200
             }
-            catch (UsuarioException ex)
+            catch(ElementoInvalidoException ex)
             {
-                return NotFound(ex.Message);
+                return BadRequest(ex.Message); // 400
+            }
+            catch(NotFoundException ex)
+            {
+                return NotFound(ex.Message); //404
             }
         }
     }

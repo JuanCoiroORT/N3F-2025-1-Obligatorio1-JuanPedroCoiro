@@ -16,7 +16,7 @@ namespace LogicaAplicacion.AplicacionCasosUso.EnvioCU
             _repository = repository;
         }
 
-        public bool Execute(double numTracking)
+        public bool Execute(string numTracking)
         {
             return _repository.ExisteNumTracking(numTracking);
         }

@@ -9,6 +9,6 @@ namespace LogicaAplicacion.Interfaces.EnvioInterfaces
 {
     public interface IGetByNumTracking
     {
-        EnvioDTO Execute(double numTracking);
+        EnvioDTO Execute(string numTracking);
     }
 }

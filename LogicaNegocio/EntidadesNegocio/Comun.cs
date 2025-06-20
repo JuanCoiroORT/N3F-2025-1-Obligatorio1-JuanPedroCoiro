@@ -13,7 +13,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public int AgenciaId { get; set; }
 
         //CONSTRUCTOR
-        public Comun(double numTracking, Usuario empleado, Usuario cliente, double peso, string estado, Agencia agencia, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
+        public Comun(string numTracking, Usuario empleado, Usuario cliente, double peso, string estado, Agencia agencia, List<Seguimiento> seguimientos) : base(numTracking, empleado, cliente, peso, seguimientos)
         {
             Agencia = agencia;
             Validar();

@@ -18,8 +18,8 @@ namespace LogicaNegocio.Interfaces
         Envio Update(int id, Envio envio);  
         void DeleteUrgente(int id);
         void DeleteComun(int id);
-        bool ExisteNumTracking(double numTracking);
-        Envio GetByNumTracking(double numTracking);
+        bool ExisteNumTracking(string numTracking);
+        Envio GetByNumTracking(string numTracking);
 
     }
 }

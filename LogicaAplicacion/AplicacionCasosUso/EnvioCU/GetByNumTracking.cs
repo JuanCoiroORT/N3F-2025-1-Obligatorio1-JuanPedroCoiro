@@ -18,7 +18,7 @@ namespace LogicaAplicacion.AplicacionCasosUso.EnvioCU
             _repository = repository;
         }
 
-        public EnvioDTO Execute(double numTracking)
+        public EnvioDTO Execute(string numTracking)
         {
             Envio envio = _repository.GetByNumTracking(numTracking);
             return new EnvioDTO(envio);

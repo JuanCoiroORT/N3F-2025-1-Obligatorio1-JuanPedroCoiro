@@ -9,7 +9,7 @@ namespace LogicaNegocio.EntidadesNegocio
     public class EnvioEliminado
     {
         public int Id { get; set; }
-        public double NumTracking { get; set; }
+        public string NumTracking { get; set; }
         public int EmpleadoId { get; set; }
         public int ClienteId { get; set; }
         public double Peso { get; set; }

@@ -1,3 +1,4 @@
+
 using Compartido.DTOs;
 using LogicaAplicacion.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -7,26 +8,22 @@ using LogicaNegocio.ValueObject;
 using LogicaAccesoDatos.Contexto;
 using LogicaNegocio.EntidadesNegocio;
 
-using WEBAPI.Servicios;
-
 namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly AppDbContexto _context;
-        private readonly TokenService _tokenService;
 
-        public HomeController(AppDbContexto context, TokenService tokenService)
+        public HomeController(AppDbContexto context)
         {
             _context = context;
-            _tokenService = tokenService;
         }
 
         public IActionResult Index()
         {
             string rolLogueado = HttpContext.Session.GetString("RolLogueado");
             ViewBag.Rol = rolLogueado;
-            
+
             return View();
         }
         public IActionResult Privacy()
@@ -40,28 +37,25 @@ namespace MVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] LoginDTO loginDto)
+        [HttpGet]
+        public IActionResult Login()
         {
-            if (string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Contrasenia))
-                return BadRequest("Debe ingresar email y contraseña.");
-
-            var usuario = _context.Usuarios.FirstOrDefault(u =>
-                u.Email.Valor == loginDto.Email && u.Password == loginDto.Contrasenia);
-
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(string email, string password)
+        {
+            // VALIDACION USUARIO
+            Usuario usuario = _context.Usuarios.FirstOrDefault(u => u.Email.Valor == email && u.Password == password);
             if (usuario == null)
-                return Unauthorized("Credenciales incorrectas.");
-
-            var token = _tokenService.GenerarToken(usuario);
-
-            var resultado = new LoginResultDTO
             {
-                Token = token,
-                Nombre = usuario.Nombre,
-                Email = usuario.Email.Valor
-            };
-
-            return Ok(resultado);
+                ViewBag.Message = "Credenciales incorrectas";
+                return View();
+            }
+            // GUARDAR EL USUARIO
+            HttpContext.Session.SetString("RolLogueado", usuario.Rol);
+            HttpContext.Session.SetInt32("IdLogueado", usuario.Id);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Logout()

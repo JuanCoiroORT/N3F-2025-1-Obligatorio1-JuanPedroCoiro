@@ -76,9 +76,9 @@ namespace WEBAPI
 
             //JWT
             // Clave secreta para firmar el token JWT
-            var jwtKey = "ClaveSuperSecretaQueDebeSerLarga123!"; // Podés ponerla en appsettings.json también
+            var jwtKey = "clave_secreta_juan_coiro_297827_programacion3_nf3_obligatorio2";
 
-            // Agregá el TokenService como servicio (opcional pero mejor)
+            // Agregar el TokenService como servicio 
             builder.Services.AddSingleton(new TokenService(jwtKey));
 
             // Configurar JWT Bearer
@@ -91,7 +91,7 @@ namespace WEBAPI
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = false, // simplificamos
+                    ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,

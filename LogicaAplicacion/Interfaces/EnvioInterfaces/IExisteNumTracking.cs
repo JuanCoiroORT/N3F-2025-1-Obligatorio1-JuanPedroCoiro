@@ -8,7 +8,7 @@ namespace LogicaAplicacion.Interfaces.EnvioInterfaces
 {
     public interface IExisteNumTracking
     {
-        bool Execute(double numTracking);
+        bool Execute(string numTracking);
     }
 }
 

@@ -108,11 +108,11 @@ namespace MVC.Controllers
                 urgenteDTO.EmpleadoId = empleadoDTO.Id;
                 urgenteDTO.Estado = "EN_PROCESO";
                 //Asignar numero de tracking unico
-                double numTracking;
+                string numTracking;
                 do
                 {
                     Random random = new Random();
-                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0);
+                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0).ToString();
                 } while (_existeNumTracking.Execute(numTracking));
                 urgenteDTO.NumTracking = numTracking;
 
@@ -198,11 +198,11 @@ namespace MVC.Controllers
                 comunDTO.AgenciaId = agenciaDTO.Id;
                 comunDTO.Estado = "EN_PROCESO";
                 //Asignar numero de tracking unico
-                double numTracking;
+                string numTracking;
                 do
                 {
                     Random random = new Random();
-                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0);
+                    numTracking = Math.Round(random.NextDouble() * 900 + 100, 0).ToString();
                 } while (_existeNumTracking.Execute(numTracking));
                 comunDTO.NumTracking = numTracking;
                 
