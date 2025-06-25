@@ -45,7 +45,7 @@ namespace WEBAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UsuarioDTO usuarioDTO)
         {
             try
@@ -61,7 +61,7 @@ namespace WEBAPI.Controllers
             {
                 return NotFound(ex.Message); //404
             }
-        }
+        }*/
 
         [HttpPost("cambiarPassword")]
         public IActionResult CambiarPassword([FromBody] CambioPasswordDTO dto)

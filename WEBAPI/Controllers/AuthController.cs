@@ -18,28 +18,37 @@ namespace WEBAPI.Controllers
             _tokenService = tokenService;
         }
 
+
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDTO loginDto)
         {
-            if (string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Password))
-                return BadRequest("Debe ingresar email y contraseña.");
-
-            var usuario = _context.Usuarios.FirstOrDefault(u =>
-                u.Email.Valor == loginDto.Email && u.Password == loginDto.Password);
-
-            if (usuario == null)
-                return Unauthorized("Credenciales incorrectas.");
-
-            var token = _tokenService.GenerarToken(usuario);
-
-            var resultado = new LoginResultDTO
+            try
             {
-                Token = token,
-                Id = usuario.Id, 
-                Rol = usuario.Rol
-            };
+                if (string.IsNullOrWhiteSpace(loginDto.Email) || string.IsNullOrWhiteSpace(loginDto.Password))
+                    return BadRequest("Debe ingresar email y contraseña.");
 
-            return Ok(resultado);
+                var usuario = _context.Usuarios.FirstOrDefault(u =>
+                    u.Email.Valor == loginDto.Email && u.Password == loginDto.Password);
+
+                if (usuario == null)
+                    return Unauthorized("Credenciales incorrectas.");
+
+                var token = _tokenService.GenerarToken(usuario);
+
+                var resultado = new LoginResultDTO
+                {
+                    Token = token,
+                    Id = usuario.Id,
+                    Rol = usuario.Rol
+                };
+
+                return Ok(resultado);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
     }
 }

@@ -33,58 +33,86 @@ namespace WEBAPI.Controllers
         [HttpGet("{numTracking}")]
         public IActionResult GetByNumTracking(string numTracking)
         {
-            EnvioDTO envioDTO = _getByNumTracking.Execute(numTracking);
-
-            if(envioDTO == null)
+            try
             {
-                return NotFound($"No se encontro un envio con el numero de tracking {numTracking}");
-            }
+                var envioDTO = _getByNumTracking.Execute(numTracking);
+                if (envioDTO == null)
+                    return NotFound($"No se encontró un envío con el número de tracking {numTracking}.");
 
-            return Ok(envioDTO);
+                return Ok(envioDTO);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
         [HttpGet("cliente/{id}")]
         public IActionResult GetEnviosCliente(int id)
         {
-            IEnumerable<EnvioDTO> envioDTOs = _getByClienteId.Execute(id);
-            if(envioDTOs == null)
+            try
             {
-                return NotFound("No se encontraron envios para el cliente.");
+                var envios = _getByClienteId.Execute(id);
+                if (envios == null || !envios.Any())
+                    return NotFound("No se encontraron envíos para el cliente.");
+
+                return Ok(envios);
             }
-            return Ok(envioDTOs);
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
         [HttpGet("{id}/seguimientos")]
         public IActionResult GetSeguimientos(int id)
         {
-            IEnumerable<SeguimientoDTO> seguimientoDTOs = _getBySeguimientosById.Execute(id);
-            if(seguimientoDTOs == null)
+            try
             {
-                return NotFound("No se encontraron seguimientos.");
+                var seguimientos = _getBySeguimientosById.Execute(id);
+                if (seguimientos == null || !seguimientos.Any())
+                    return NotFound("No se encontraron seguimientos.");
+
+                return Ok(seguimientos);
             }
-            return Ok(seguimientoDTOs);
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
         [HttpPost("filtrar")]
         public IActionResult GetByFechas([FromBody] FiltroEnvioDTO filtro)
         {
-            IEnumerable<EnvioDTO> enviosDTO = _getByFechas.Execute(filtro.FechaInicio, filtro.FechaFin, filtro.Estado);
-            if(enviosDTO == null)
+            try
             {
-                return NotFound("No se encontraron envios con ese filtro.");
+                var envios = _getByFechas.Execute(filtro.FechaInicio, filtro.FechaFin, filtro.Estado);
+                if (envios == null || !envios.Any())
+                    return NotFound("No se encontraron envíos con ese filtro.");
+
+                return Ok(envios);
             }
-            return Ok(enviosDTO);
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
 
         [HttpPost("cliente/{idCliente}/buscarPorComentario")]
         public IActionResult GetByComentario(int idCliente, [FromBody] string comentario)
         {
-            IEnumerable<EnvioDTO> enviosDTO = _getByComentario.Execute(idCliente, comentario);
-            if(enviosDTO == null)
+            try
             {
-                return NotFound("No se encontraron envios con ese comentario.");
+                var envios = _getByComentario.Execute(idCliente, comentario);
+                if (envios == null || !envios.Any())
+                    return NotFound("No se encontraron envíos con ese comentario.");
+
+                return Ok(envios);
             }
-            return Ok(enviosDTO);
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
     }
 }
