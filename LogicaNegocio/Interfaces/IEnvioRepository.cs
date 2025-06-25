@@ -23,6 +23,7 @@ namespace LogicaNegocio.Interfaces
         Envio GetByNumTracking(string numTracking);
         IEnumerable<Seguimiento> GetSeguimientosById(int id);
         IEnumerable<Envio> GetByFechas(DateTime? fch1, DateTime? fch2, string? estado);
+        IEnumerable<Envio> GetByComentario(int id, string  comentario);
 
     }
 }

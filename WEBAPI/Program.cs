@@ -64,6 +64,7 @@ namespace WEBAPI
             builder.Services.AddScoped(typeof(IGetAllByClienteId), typeof(GetAllByClienteId));
             builder.Services.AddScoped(typeof(IGetSeguimientosById), typeof(GetSeguimientosById));
             builder.Services.AddScoped(typeof(IGetByFechas), typeof(GetByFechas));
+            builder.Services.AddScoped(typeof(IGetByComentario), typeof(GetByComentario));
 
 
 

@@ -18,12 +18,15 @@ namespace WEBAPI.Controllers
         private IGetAllByClienteId _getByClienteId;
         private IGetSeguimientosById _getBySeguimientosById;
         private IGetByFechas _getByFechas;
-        public EnviosController(IGetByNumTracking getByNumTracking, IGetAllByClienteId getAllByClienteId, IGetSeguimientosById getBySeguimientosById, IGetByFechas getByFechas)
+        private IGetByComentario _getByComentario;
+        public EnviosController(IGetByNumTracking getByNumTracking, IGetAllByClienteId getAllByClienteId,
+            IGetSeguimientosById getBySeguimientosById, IGetByFechas getByFechas, IGetByComentario getByComentario)
         {
             _getByNumTracking = getByNumTracking;
             _getByClienteId = getAllByClienteId;
             _getBySeguimientosById = getBySeguimientosById;
             _getByFechas = getByFechas;
+            _getByComentario = getByComentario;
         }
 
 
@@ -71,6 +74,17 @@ namespace WEBAPI.Controllers
             if(enviosDTO == null)
             {
                 return NotFound("No se encontraron envios con ese filtro.");
+            }
+            return Ok(enviosDTO);
+        }
+
+        [HttpPost("cliente/{idCliente}/buscarPorComentario")]
+        public IActionResult GetByComentario(int idCliente, [FromBody] string comentario)
+        {
+            IEnumerable<EnvioDTO> enviosDTO = _getByComentario.Execute(idCliente, comentario);
+            if(enviosDTO == null)
+            {
+                return NotFound("No se encontraron envios con ese comentario.");
             }
             return Ok(enviosDTO);
         }

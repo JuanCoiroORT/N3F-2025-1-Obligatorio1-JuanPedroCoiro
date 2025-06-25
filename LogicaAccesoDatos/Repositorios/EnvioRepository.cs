@@ -217,5 +217,13 @@ namespace LogicaAccesoDatos.Repositorios
                 .Where(e => e.FechaCreacion >= fch1 && e.FechaCreacion <= fch2 && e.Estado == estado)
                 .OrderBy(e => e.NumTracking);
         }
+
+        public IEnumerable<Envio> GetByComentario(int id, string comentario)
+        {
+            return _contexto.Envios
+                .Include(e => e.Seguimientos)
+                .Where(e => e.ClienteId == id && e.Seguimientos.Any(s => s.Comentario.ToLower().Contains(comentario)))
+                .OrderBy(e => e.FechaCreacion);
+        }
     }
 }
