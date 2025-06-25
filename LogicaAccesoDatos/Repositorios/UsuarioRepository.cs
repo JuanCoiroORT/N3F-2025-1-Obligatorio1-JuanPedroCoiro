@@ -122,5 +122,22 @@ namespace LogicaAccesoDatos.Repositorios
         {
             return _contexto.Usuarios.Where(u => u.Rol == "Cliente").ToList();
         }
+
+        public bool CambioPassword(int id, string actual, string nueva)
+        {
+            // Buscar usuario
+            Usuario usuarioBuscado = GetById(id);
+
+            // Actualizar propiedades
+            if (actual != usuarioBuscado.Password)
+            {
+                throw new UsuarioException("La password actual ingresada no es correcta.");
+            }
+            usuarioBuscado.Password = nueva;
+
+            _contexto.SaveChanges();
+
+            return true;
+        }
     }
 }

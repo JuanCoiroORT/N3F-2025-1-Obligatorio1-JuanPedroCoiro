@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Compartido.DTOs
 {
-    public class LoginResultDTO
+    public class CambioPasswordDTO
     {
-        public string Token { get; set; }
         public int Id { get; set; }
-        public string Rol {  get; set; }
+        public string PasswordActual { get; set; }
+        public string PasswordNueva { get; set; }
     }
 }

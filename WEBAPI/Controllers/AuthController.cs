@@ -35,7 +35,8 @@ namespace WEBAPI.Controllers
             var resultado = new LoginResultDTO
             {
                 Token = token,
-                Id = usuario.Id
+                Id = usuario.Id, 
+                Rol = usuario.Rol
             };
 
             return Ok(resultado);

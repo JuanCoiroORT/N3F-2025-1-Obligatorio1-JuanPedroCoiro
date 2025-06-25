@@ -19,11 +19,13 @@ namespace WEBAPI.Controllers
 
         private IUpdateUsuario _updateUsuario;
         private IGetUserById _getUserById;
+        private ICambioPassword _cambioPassword;
 
-        public UsuariosController(IUpdateUsuario updateUsuario, IGetUserById getUserById)
+        public UsuariosController(IUpdateUsuario updateUsuario, IGetUserById getUserById, ICambioPassword cambioPassword)
         {
             _updateUsuario = updateUsuario;
             _getUserById = getUserById;
+            _cambioPassword = cambioPassword;
         }
 
         [HttpGet("{id}")]
@@ -60,5 +62,34 @@ namespace WEBAPI.Controllers
                 return NotFound(ex.Message); //404
             }
         }
+
+        [HttpPost("cambiarPassword")]
+        public IActionResult CambiarPassword([FromBody] CambioPasswordDTO dto)
+        {
+            try
+            {
+                bool exito = _cambioPassword.Execute(dto.Id, dto.PasswordActual, dto.PasswordNueva);
+
+                if (!exito)
+                {
+                    return BadRequest("La contraseña actual es incorrecta.");
+                }
+
+                return Ok("Contraseña actualizada correctamente.");
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ElementoInvalidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
+        }
+
     }
 }

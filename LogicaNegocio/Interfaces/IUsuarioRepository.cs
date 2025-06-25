@@ -17,5 +17,6 @@ namespace LogicaNegocio.Interfaces
         IEnumerable<Usuario> GetAll();
         IEnumerable<Usuario> GetByName(string name);
         IEnumerable<Usuario> GetClientes();
+        bool CambioPassword(int id, string actual, string nueva);
     }
 }

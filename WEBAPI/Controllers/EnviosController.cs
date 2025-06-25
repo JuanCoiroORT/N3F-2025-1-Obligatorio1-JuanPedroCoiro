@@ -31,7 +31,6 @@ namespace WEBAPI.Controllers
 
 
         [HttpGet("{numTracking}")]
-        [AllowAnonymous]
         public IActionResult GetByNumTracking(string numTracking)
         {
             EnvioDTO envioDTO = _getByNumTracking.Execute(numTracking);
@@ -45,7 +44,6 @@ namespace WEBAPI.Controllers
         }
 
         [HttpGet("cliente/{id}")]
-        [AllowAnonymous]
         public IActionResult GetEnviosCliente(int id)
         {
             IEnumerable<EnvioDTO> envioDTOs = _getByClienteId.Execute(id);
