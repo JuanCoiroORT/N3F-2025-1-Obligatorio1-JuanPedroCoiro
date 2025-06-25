@@ -31,15 +31,29 @@ namespace LogicaAccesoDatos.Repositorios
         public Usuario Update(int id, Usuario usuario)
         {
             // Buscar usuario
-            Usuario usuarioBuscado = _contexto.Usuarios.FirstOrDefault(u => u.Id == usuario.Id);
+            Usuario usuarioBuscado = GetById(id);
 
             // Actualizar propiedades
-            usuarioBuscado.CI = usuario.CI;
-            usuarioBuscado.NombreCompleto = new NombreCompleto(usuario.NombreCompleto.Nombre, usuario.NombreCompleto.Apellido);
-            usuarioBuscado.Email = usuario.Email;
-            usuarioBuscado.Password = usuario.Password;
-            usuarioBuscado.Rol = usuario.Rol;
-
+            if(usuario.CI != null)
+            {
+                usuarioBuscado.CI = usuario.CI;
+            }
+            if(usuario.NombreCompleto != null)
+            {
+                usuarioBuscado.NombreCompleto = new NombreCompleto(usuario.NombreCompleto.Nombre, usuario.NombreCompleto.Apellido);  
+            }
+            if(usuario.Email != null)
+            {
+                usuarioBuscado.Email = usuario.Email;
+            }
+            if (usuario.Rol != null)
+            {
+                usuarioBuscado.Rol = usuario.Rol;
+            }
+            if(usuario.Password != null)
+            {
+                usuarioBuscado.Password = usuario.Password;
+            }
             _contexto.SaveChanges();
 
             return usuario;

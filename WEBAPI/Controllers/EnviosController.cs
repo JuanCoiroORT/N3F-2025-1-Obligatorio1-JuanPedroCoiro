@@ -15,10 +15,15 @@ namespace WEBAPI.Controllers
     {
 
         private IGetByNumTracking _getByNumTracking;
-
-        public EnviosController(IGetByNumTracking getByNumTracking)
+        private IGetAllByClienteId _getByClienteId;
+        private IGetSeguimientosById _getBySeguimientosById;
+        private IGetByFechas _getByFechas;
+        public EnviosController(IGetByNumTracking getByNumTracking, IGetAllByClienteId getAllByClienteId, IGetSeguimientosById getBySeguimientosById, IGetByFechas getByFechas)
         {
             _getByNumTracking = getByNumTracking;
+            _getByClienteId = getAllByClienteId;
+            _getBySeguimientosById = getBySeguimientosById;
+            _getByFechas = getByFechas;
         }
 
 
@@ -34,6 +39,40 @@ namespace WEBAPI.Controllers
             }
 
             return Ok(envioDTO);
+        }
+
+        [HttpGet("cliente/{id}")]
+        [AllowAnonymous]
+        public IActionResult GetEnviosCliente(int id)
+        {
+            IEnumerable<EnvioDTO> envioDTOs = _getByClienteId.Execute(id);
+            if(envioDTOs == null)
+            {
+                return NotFound("No se encontraron envios para el cliente.");
+            }
+            return Ok(envioDTOs);
+        }
+
+        [HttpGet("{id}/seguimientos")]
+        public IActionResult GetSeguimientos(int id)
+        {
+            IEnumerable<SeguimientoDTO> seguimientoDTOs = _getBySeguimientosById.Execute(id);
+            if(seguimientoDTOs == null)
+            {
+                return NotFound("No se encontraron seguimientos.");
+            }
+            return Ok(seguimientoDTOs);
+        }
+
+        [HttpPost("filtrar")]
+        public IActionResult GetByFechas([FromBody] FiltroEnvioDTO filtro)
+        {
+            IEnumerable<EnvioDTO> enviosDTO = _getByFechas.Execute(filtro.FechaInicio, filtro.FechaFin, filtro.Estado);
+            if(enviosDTO == null)
+            {
+                return NotFound("No se encontraron envios con ese filtro.");
+            }
+            return Ok(enviosDTO);
         }
     }
 }

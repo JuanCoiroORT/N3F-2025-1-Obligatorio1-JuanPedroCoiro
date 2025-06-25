@@ -35,8 +35,7 @@ namespace WEBAPI.Controllers
             var resultado = new LoginResultDTO
             {
                 Token = token,
-                Nombre = usuario.NombreCompleto.Nombre,
-                Email = usuario.Email.Valor
+                Id = usuario.Id
             };
 
             return Ok(resultado);

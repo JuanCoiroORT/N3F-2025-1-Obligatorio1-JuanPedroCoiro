@@ -22,7 +22,7 @@ namespace Compartido.DTOs
             Estado = envioComun.Estado;
             AgenciaId = envioComun.AgenciaId;
             Agencia = envioComun.Agencia;
-            Seguimientos = envioComun.Seguimientos;
+            Seguimientos = envioComun.Seguimientos.Select(s => new SeguimientoDTO(s)).ToList();
         }
 
         public ComunDTO() { }
@@ -37,9 +37,9 @@ namespace Compartido.DTOs
                 EmpleadoId = this.EmpleadoId,
                 ClienteId = this.ClienteId,
                 Estado = this.Estado,
-                Seguimientos = this.Seguimientos,
+                Seguimientos = this.Seguimientos.Select(c => c.ToSeguimiento()).ToList(),
                 AgenciaId = this.AgenciaId,
-                Agencia = this.Agencia,
+                Agencia = this.Agencia
             };
             return envioComun;
         }

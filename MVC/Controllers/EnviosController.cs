@@ -76,7 +76,7 @@ namespace MVC.Controllers
             IEnumerable<UsuarioDTO> clientesDTO = _getClientes.Execute();
             var clientesSelect = clientesDTO.Select(c => new SelectListItem
             {
-                Text = c.Email.Valor,
+                Text = c.Email,
                 Value = c.Id.ToString()
             }).ToList();
 
@@ -131,7 +131,7 @@ namespace MVC.Controllers
                 // Volver a cargar el vm por si hay error al enviar formulario
                 vm.Clientes = _getClientes.Execute().Select(c => new SelectListItem
                 {
-                    Text = c.Email.Valor,
+                    Text = c.Email,
                     Value = c.Id.ToString()
                 }).ToList();
 
@@ -159,7 +159,7 @@ namespace MVC.Controllers
             IEnumerable<UsuarioDTO> clientesDTO = _getClientes.Execute();
             var clientesSelect = clientesDTO.Select(c => new SelectListItem
             {
-                Text = c.Email.Valor,
+                Text = c.Email,
                 Value = c.Id.ToString()
             }).ToList();
 
@@ -226,7 +226,7 @@ namespace MVC.Controllers
 
                 vm.Clientes = _getClientes.Execute().Select(c => new SelectListItem
                 {
-                    Text = c.Email.Valor,
+                    Text = c.Email,
                     Value = c.Id.ToString()
                 }).ToList();
 
@@ -262,7 +262,7 @@ namespace MVC.Controllers
                 };
 
                 //Agregar seguimineto al envio
-                comunDTO.Seguimientos.Add(nuevoSeguimineto);
+                comunDTO.Seguimientos.Add(new SeguimientoDTO(nuevoSeguimineto));
 
                 // Actualizar Comun
                 _updateEnvio.Execute(id, comunDTO);
@@ -309,7 +309,7 @@ namespace MVC.Controllers
                 };
 
                 //Agregar seguimineto al envio
-                urgenteDTO.Seguimientos.Add(nuevoSeguimiento);
+                urgenteDTO.Seguimientos.Add(new SeguimientoDTO(nuevoSeguimiento));
 
                 // Actualizar Comun
                 _updateEnvio.Execute(id, urgenteDTO);

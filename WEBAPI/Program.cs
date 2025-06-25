@@ -61,6 +61,12 @@ namespace WEBAPI
             builder.Services.AddScoped(typeof(IDeleteUrgente), typeof(DeleteUrgente));
             builder.Services.AddScoped(typeof(IDeleteComun), typeof(DeleteComun));
             builder.Services.AddScoped(typeof(IGetByNumTracking), typeof(GetByNumTracking));
+            builder.Services.AddScoped(typeof(IGetAllByClienteId), typeof(GetAllByClienteId));
+            builder.Services.AddScoped(typeof(IGetSeguimientosById), typeof(GetSeguimientosById));
+            builder.Services.AddScoped(typeof(IGetByFechas), typeof(GetByFechas));
+
+
+
 
             // Dependecias Agencia
             builder.Services.AddScoped(typeof(IAgenciaRepository), typeof(AgenciaRepository));

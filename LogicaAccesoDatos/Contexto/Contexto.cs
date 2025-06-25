@@ -30,7 +30,7 @@ namespace LogicaAccesoDatos.Contexto
             // Relación Envio -> Seguimiento
             modelBuilder.Entity<Envio>()
                 .HasMany(e => e.Seguimientos)
-                .WithOne(s => s.Envio)
+                .WithOne()
                 .HasForeignKey(s => s.EnvioId);
 
             // Evitar delete en cascada

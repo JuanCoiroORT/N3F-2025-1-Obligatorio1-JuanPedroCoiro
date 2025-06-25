@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(AppDbContexto))]
-    [Migration("20250531185241_Init")]
+    [Migration("20250625125736_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace LogicaAccesoDatos.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -63,8 +63,12 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("NumTracking")
-                        .HasColumnType("float");
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NumTracking")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Peso")
                         .HasColumnType("float");
@@ -108,8 +112,9 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<DateTime>("FechaEliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("NumTracking")
-                        .HasColumnType("float");
+                    b.Property<string>("NumTracking")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Peso")
                         .HasColumnType("float");
@@ -205,9 +210,6 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<bool>("Eficiente")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
                     b.HasDiscriminator().HasValue("Urgente");
                 });
 
@@ -291,15 +293,13 @@ namespace LogicaAccesoDatos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Envio", "Envio")
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.Envio", null)
                         .WithMany("Seguimientos")
                         .HasForeignKey("EnvioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Empleado");
-
-                    b.Navigation("Envio");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>

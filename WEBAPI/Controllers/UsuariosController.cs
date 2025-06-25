@@ -26,6 +26,23 @@ namespace WEBAPI.Controllers
             _getUserById = getUserById;
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                var usuarioDTO = _getUserById.Execute(id);
+                if (usuarioDTO == null)
+                    return NotFound("Usuario no encontrado.");
+
+                return Ok(usuarioDTO);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error interno del servidor.");
+            }
+        }
+
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UsuarioDTO usuarioDTO)
         {

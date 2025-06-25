@@ -60,6 +60,9 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("NumTracking")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -204,9 +207,6 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<bool>("Eficiente")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
                     b.HasDiscriminator().HasValue("Urgente");
                 });
 
@@ -290,15 +290,13 @@ namespace LogicaAccesoDatos.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LogicaNegocio.EntidadesNegocio.Envio", "Envio")
+                    b.HasOne("LogicaNegocio.EntidadesNegocio.Envio", null)
                         .WithMany("Seguimientos")
                         .HasForeignKey("EnvioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Empleado");
-
-                    b.Navigation("Envio");
                 });
 
             modelBuilder.Entity("LogicaNegocio.EntidadesNegocio.Usuario", b =>

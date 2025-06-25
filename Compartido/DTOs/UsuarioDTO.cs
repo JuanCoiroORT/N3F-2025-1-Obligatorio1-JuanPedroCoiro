@@ -9,7 +9,7 @@ namespace Compartido.DTOs
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string CI { get; set; }
-        public Email Email { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public string Rol { get; set; }
 
@@ -19,7 +19,7 @@ namespace Compartido.DTOs
             CI = usuario.CI;
             Nombre = usuario.NombreCompleto.Nombre;
             Apellido = usuario.NombreCompleto.Apellido;
-            Email = usuario.Email;
+            Email = usuario.Email.Valor;
             Password = usuario.Password;
             Rol = usuario.Rol;
         }
@@ -33,7 +33,7 @@ namespace Compartido.DTOs
                 Id = this.Id,
                 NombreCompleto = new NombreCompleto(this.Nombre, this.Apellido),
                 CI = this.CI,
-                Email = this.Email,
+                Email = new Email(this.Email),
                 Password = this.Password,
                 Rol = this.Rol
             };

@@ -11,6 +11,7 @@ namespace LogicaNegocio.Interfaces
     {
         Urgente AddUrgente(Urgente urgente);
         Comun AddComun(Comun comun);
+        IEnumerable<Envio> GetAllByClienteId(int id);
         IEnumerable<Comun> GetAllComunes();
         IEnumerable<Urgente> GetAllUrgentes();
         Comun GetComunById(int id);
@@ -20,6 +21,8 @@ namespace LogicaNegocio.Interfaces
         void DeleteComun(int id);
         bool ExisteNumTracking(string numTracking);
         Envio GetByNumTracking(string numTracking);
+        IEnumerable<Seguimiento> GetSeguimientosById(int id);
+        IEnumerable<Envio> GetByFechas(DateTime? fch1, DateTime? fch2, string? estado);
 
     }
 }

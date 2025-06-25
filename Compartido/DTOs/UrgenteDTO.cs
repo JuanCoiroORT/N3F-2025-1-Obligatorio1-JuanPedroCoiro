@@ -21,7 +21,7 @@ namespace Compartido.DTOs
             EmpleadoId = envioUrgente.EmpleadoId;
             ClienteId = envioUrgente.ClienteId;
             Estado = envioUrgente.Estado;
-            Seguimientos = envioUrgente.Seguimientos;
+            Seguimientos = envioUrgente.Seguimientos.Select(s => new SeguimientoDTO(s)).ToList();
             DireccionPostal = envioUrgente.DireccionPostal;
             Eficiente = envioUrgente.Eficiente;
         }
@@ -38,7 +38,7 @@ namespace Compartido.DTOs
                 EmpleadoId = this.EmpleadoId,
                 ClienteId = this.ClienteId,
                 Estado = this.Estado,
-                Seguimientos = this.Seguimientos,
+                Seguimientos = this.Seguimientos.Select(u => u.ToSeguimiento()).ToList(),
                 DireccionPostal = this.DireccionPostal,
                 Eficiente = this.Eficiente,
             };

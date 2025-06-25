@@ -15,8 +15,9 @@ namespace Compartido.DTOs
         public int EmpleadoId { get; set; }
         public int ClienteId { get; set; }
         public string NumTracking { get; set; }
+        public DateTime FechaCreacion {  get; set; }
 
-        public List<Seguimiento> Seguimientos { get; set; } = new();
+        public List<SeguimientoDTO> Seguimientos { get; set; } = new();
 
         public EnvioDTO(Envio envio)
         {
@@ -26,7 +27,8 @@ namespace Compartido.DTOs
             EmpleadoId = envio.EmpleadoId;
             ClienteId = envio.ClienteId;
             Estado = envio.Estado;
-            Seguimientos = envio.Seguimientos;
+            FechaCreacion = envio.FechaCreacion;
+            Seguimientos = envio.Seguimientos.Select(s => new SeguimientoDTO(s)).ToList();
         }
 
         public EnvioDTO() { }

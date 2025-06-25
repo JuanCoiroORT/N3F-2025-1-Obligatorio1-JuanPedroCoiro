@@ -12,14 +12,14 @@ namespace Compartido.DTOs
         public int Id { get; set; }
         public string Comentario { get; set; }
         public DateTime Fecha { get; set; }
-        public Usuario Empleado { get; set; }
+        public int EmpleadoId { get; set; }
 
         public SeguimientoDTO(Seguimiento s)
         {
             Id = s.Id;
             Comentario = s.Comentario;
             Fecha = s.Fecha;
-            Empleado = s.Empleado;
+            EmpleadoId = s.EmpleadoId;
         }
 
         public SeguimientoDTO() { }
@@ -31,7 +31,7 @@ namespace Compartido.DTOs
                 Id = this.Id,
                 Comentario = this.Comentario,
                 Fecha = this.Fecha,
-                Empleado = this.Empleado
+                EmpleadoId = this.EmpleadoId
             };
             return s;
         }

@@ -15,15 +15,16 @@ namespace LogicaNegocio.EntidadesNegocio
         public DateTime Fecha { get; set; }
         public Usuario Empleado { get; set; }
         public int EmpleadoId {  get; set; }
-        public Envio Envio { get; set; }
+
         public int EnvioId { get; set; }
 
-        public Seguimiento(string comentario, Usuario empleado)
+        public Seguimiento(string comentario, Usuario empleado, int envioId)
         {
             Comentario = comentario;
             Empleado = empleado;
             Fecha = DateTime.Now;
             EmpleadoId = empleado.Id;
+            EnvioId = envioId;
             Validar();
         }
 

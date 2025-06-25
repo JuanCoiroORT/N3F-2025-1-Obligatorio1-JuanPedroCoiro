@@ -17,6 +17,7 @@ namespace LogicaNegocio.EntidadesNegocio
         public int ClienteId { get; set; }
         public double Peso { get; set; }
         public string Estado { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public List<Seguimiento> Seguimientos { get; set; } = new List<Seguimiento>();
 
         //CONSTRUCTOR
@@ -28,6 +29,7 @@ namespace LogicaNegocio.EntidadesNegocio
             Peso = peso;
             Estado = "EN_PROCESO";
             Seguimientos = seguimientos;
+            FechaCreacion = DateTime.Now;
         }
         public Envio() { }
         

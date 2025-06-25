@@ -32,6 +32,13 @@ namespace LogicaAccesoDatos.Repositorios
             return comun;
         }
 
+        public IEnumerable<Envio> GetAllByClienteId(int id)
+        {
+            return _contexto.Envios
+                .Where(e => e.ClienteId == id)
+                .Include(e => e.Seguimientos) .ToList();
+        }
+
         public IEnumerable<Comun> GetAllComunes()
         {
             return _contexto.Envios
@@ -195,6 +202,20 @@ namespace LogicaAccesoDatos.Repositorios
         public Envio GetByNumTracking(string numTracking)
         {
             return _contexto.Set<Envio>().FirstOrDefault(e => e.NumTracking == numTracking);
+        }
+
+        public IEnumerable<Seguimiento> GetSeguimientosById(int id)
+        {
+            return _contexto.Envios
+                .Where(e => e.Id == id)
+                .SelectMany(e => e.Seguimientos);
+        }
+
+        public IEnumerable<Envio> GetByFechas(DateTime? fch1, DateTime? fch2, string? estado)
+        {
+            return _contexto.Envios
+                .Where(e => e.FechaCreacion >= fch1 && e.FechaCreacion <= fch2 && e.Estado == estado)
+                .OrderBy(e => e.NumTracking);
         }
     }
 }
