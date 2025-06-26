@@ -45,24 +45,6 @@ namespace WEBAPI.Controllers
             }
         }
 
-        /*[HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UsuarioDTO usuarioDTO)
-        {
-            try
-            {
-                _updateUsuario.Execute(id, usuarioDTO);
-                return Ok(); // 200
-            }
-            catch(ElementoInvalidoException ex)
-            {
-                return BadRequest(ex.Message); // 400
-            }
-            catch(NotFoundException ex)
-            {
-                return NotFound(ex.Message); //404
-            }
-        }*/
-
         [HttpPost("cambiarPassword")]
         public IActionResult CambiarPassword([FromBody] CambioPasswordDTO dto)
         {
